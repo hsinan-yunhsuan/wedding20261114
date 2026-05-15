@@ -628,6 +628,25 @@
         <p class="success-title">感謝您的回覆！</p>
         <p class="success-text">Thank you for responding.<br>We look forward to celebrating with you.</p>
       </div>
+
+      <div class="success-message" id="error-msg" style="display:none;">
+        <div class="success-icon">⚠️</div>
+        <p class="success-title" style="color:#c0704a;">送出失敗</p>
+        <p class="success-text" style="color:#6b5c50;">
+          您的裝置目前無法連線，回覆未能送達。<br><br>
+          請點擊下方連結，直接用 Google 表單回覆：<br><br>
+          <a id="fallback-link" href="#" target="_blank" rel="noopener"
+            style="display:inline-block;margin-top:0.5rem;padding:0.7rem 1.8rem;background:linear-gradient(135deg,#d4a373,#c99260);color:white;border-radius:30px;text-decoration:none;font-size:0.82rem;letter-spacing:0.15em;">
+            開啟 Google 表單　→
+          </a><br><br>
+          <span style="font-size:0.72rem;color:var(--text-light);">
+            若連結無法開啟，請稍後再試或聯繫新人。
+          </span>
+        </p>
+        <button onclick="resetForm()" style="margin-top:1.5rem;background:none;border:1px solid var(--border-subtle);border-radius:20px;padding:0.5rem 1.2rem;font-size:0.75rem;color:var(--text-light);cursor:pointer;letter-spacing:0.1em;">
+          ← 返回重新填寫
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -768,8 +787,18 @@ function handleLuncheonCount(val){
 
 
 // ── Form submit via fetch (no-cors) ──
+// Google 表單的公開填寫連結（賓客備用）
+const FORM_VIEWURL = 'https://docs.google.com/forms/d/e/1FAIpQLSfGCqjntw5e6Ez1u3pUToNv1AW4g_KL4WN9QP9OjFGuZIFjyQ/viewform';
+
 function submitForm(e){
   e.preventDefault();
+
+  // 先檢查網路連線
+  if (!navigator.onLine) {
+    showError();
+    return;
+  }
+
   const params = new URLSearchParams({
     [ENTRY.name]:       document.getElementById('f-name').value.trim(),
     [ENTRY.side]:       document.getElementById('f-side').value,
@@ -779,15 +808,40 @@ function submitForm(e){
     [ENTRY.highchair]:  document.getElementById('f-highchair').value,
     [ENTRY.message]:    document.getElementById('f-message').value.trim(),
   });
+
+  // 同時建立備用 Google 表單連結（預填資料）
+  const fallbackUrl = FORM_VIEWURL + '?' + params.toString()
+    .replace('entry.' + ENTRY.name.replace('entry.',''), 'entry.' + ENTRY.name.replace('entry.',''));
+  document.getElementById('fallback-link').href = FORM_VIEWURL + '?' + params.toString();
+
+  // 送出，並設 5 秒 timeout 偵測是否失敗
+  const timeout = setTimeout(() => {
+    showError();
+  }, 5000);
+
   fetch(FORM_URL, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: params.toString(),
-  }).catch(() => {});
+  }).then(() => {
+    clearTimeout(timeout);
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  }).catch(() => {
+    clearTimeout(timeout);
+    showError();
+  });
+}
 
+function showError() {
   document.getElementById('form-area').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
+  document.getElementById('error-msg').style.display = 'block';
+}
+
+function resetForm() {
+  document.getElementById('error-msg').style.display = 'none';
+  document.getElementById('form-area').style.display = 'block';
 }
 </script>
 
