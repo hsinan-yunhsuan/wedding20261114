@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>婚禮邀請函 · Wedding Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #d4a373;
+    --sage: #8da399;
+    --gold-light: #e8c99a;
+    --sage-light: #b5cec7;
+    --cream: #fdf8f2;
+    --warm-white: #fffef9;
+    --text-dark: #3d3028;
+    --text-mid: #6b5c50;
+    --text-light: #a89080;
+    --shadow-soft: 0 8px 32px rgba(180,140,100,0.12), 0 2px 8px rgba(180,140,100,0.08);
+    --shadow-card: 0 12px 40px rgba(140,110,80,0.14), 0 4px 12px rgba(140,110,80,0.08);
+    --border-subtle: rgba(212,163,115,0.25);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Noto Sans TC', 'Montserrat', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    background: rgba(253,248,242,0.75); border-bottom: 1px solid var(--border-subtle);
+    padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 300; font-size: 1.25rem; color: var(--gold); letter-spacing: 0.08em; white-space: nowrap; }
+  .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+  .nav-links a { font-family: 'Noto Sans TC', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; color: var(--text-mid); text-decoration: none; padding: 0.45rem 0.8rem; border-radius: 30px; transition: all 0.3s; white-space: nowrap; }
+  .nav-links a:hover { background: rgba(212,163,115,0.15); color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    height: 100vh; min-height: 600px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    /* ═══════════════════════════════════════════════════════
+       將下方的 Unsplash 佔位圖換成您的婚紗照網址即可，
+       例如：url('https://your-cdn.com/your-photo.jpg')
+       或放在同資料夾時寫：url('cover.jpg')
+       ═══════════════════════════════════════════════════════ */
+    background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1920&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  /* 暖色調遮罩，讓文字清晰可讀，可調整 opacity 控制透明度 */
+  .hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(
+      160deg,
+      rgba(245,237,224,0.72) 0%,
+      rgba(237,232,223,0.62) 30%,
+      rgba(221,231,227,0.55) 60%,
+      rgba(237,228,215,0.68) 100%
+    );
+    pointer-events: none;
+  }
+  /* 細線幾何裝飾疊在最上 */
+  .hero::after {
+    content: ''; position: absolute; inset: 0; z-index: 2;
+    background-image: url("data:image/svg+xml,%3Csvg width='600' height='600' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23d4a373' stroke-width='0.6' opacity='0.15'%3E%3Cellipse cx='300' cy='300' rx='280' ry='280'/%3E%3Cellipse cx='300' cy='300' rx='240' ry='240'/%3E%3Cline x1='300' y1='20' x2='300' y2='580'/%3E%3Cline x1='20' y1='300' x2='580' y2='300'/%3E%3Cline x1='100' y1='100' x2='500' y2='500'/%3E%3Cline x1='500' y1='100' x2='100' y2='500'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 500px 500px; background-position: center; background-repeat: no-repeat;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 3; text-align: center; animation: fadeUp 1.4s ease forwards; padding: 0 1.5rem; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-eyebrow { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 1rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 1.5rem; opacity: 0.85; }
+  .hero-names { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1.05; color: var(--text-dark); letter-spacing: 0.04em; margin-bottom: 0.5rem; text-shadow: 0 2px 20px rgba(253,248,242,0.6); }
+  .hero-names .ampersand { color: var(--gold); font-style: italic; font-size: 0.85em; margin: 0 0.4em; }
+  .hero-divider { display: flex; align-items: center; gap: 1rem; justify-content: center; margin: 1.8rem 0; }
+  .hero-divider-line { width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); }
+  .hero-divider-line.right { background: linear-gradient(to left, transparent, var(--gold)); }
+  .hero-divider-ornament { font-size: 1.1rem; color: var(--gold); opacity: 0.7; }
+  .hero-date { font-family: 'Noto Sans TC', sans-serif; font-size: 1rem; letter-spacing: 0.25em; color: var(--text-mid); margin-bottom: 0.5rem; }
+  .hero-location { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 1.2rem; color: var(--sage); letter-spacing: 0.1em; }
+  .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-light); font-size: 0.7rem; letter-spacing: 0.2em; animation: bounce 2.5s ease-in-out infinite; z-index: 3; }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+  .scroll-arrow { width: 24px; height: 24px; border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold); transform: rotate(45deg); opacity: 0.5; }
+
+  /* SECTIONS */
+  section { padding: 6rem 1.5rem; }
+  .section-inner { max-width: 900px; margin: 0 auto; }
+  .section-label { text-align: center; font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 0.8rem; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.75rem; opacity: 0.8; }
+  .section-title { text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--text-dark); letter-spacing: 0.05em; margin-bottom: 0.75rem; line-height: 1.25; }
+  .section-subtitle { text-align: center; font-family: 'Noto Sans TC', sans-serif; font-size: 0.85rem; color: var(--text-light); letter-spacing: 0.1em; margin-bottom: 3.5rem; line-height: 1.8; }
+  .ornamental-divider { text-align: center; margin: 0 auto 3rem; display: flex; align-items: center; gap: 1.25rem; justify-content: center; }
+  .ornamental-divider-line { width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--border-subtle)); }
+  .ornamental-divider-line.right { background: linear-gradient(to left, transparent, var(--border-subtle)); }
+  .ornamental-divider span { color: var(--gold); font-size: 0.9rem; opacity: 0.5; }
+
+  /* COUNTDOWN */
+  #countdown-section { background: linear-gradient(160deg, #f0ebe1 0%, #e8f0ed 50%, #ece5dc 100%); }
+  .countdown-wrapper { display: flex; justify-content: center; align-items: center; flex-wrap: nowrap; }
+  .countdown-unit { display: flex; align-items: center; }
+  .countdown-card { background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.98); border-radius: 14px; box-shadow: var(--shadow-card); padding: 1rem 1rem 0.9rem; min-width: 82px; text-align: center; position: relative; overflow: hidden; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .countdown-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 60%); pointer-events: none; }
+  .countdown-number { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 2.2rem; line-height: 1; color: var(--text-dark); letter-spacing: -0.02em; position: relative; z-index: 1; display: block; }
+  @keyframes flipNum { 0% { transform: translateY(0) scale(1); opacity: 1; } 35% { transform: translateY(-10px) scale(0.9); opacity: 0; } 60% { transform: translateY(10px) scale(0.9); opacity: 0; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+  .countdown-number.flip { animation: flipNum 0.3s ease; }
+  .countdown-divider { width: 1px; height: 20px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); margin: 0.4rem auto; opacity: 0.6; }
+  .countdown-label-zh { font-family: 'Noto Sans TC', sans-serif; font-size: 0.7rem; color: var(--text-light); letter-spacing: 0.15em; display: block; position: relative; z-index: 1; }
+  .countdown-label-en { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.2em; display: block; margin-top: 0.15rem; position: relative; z-index: 1; opacity: 0.8; }
+  .countdown-sep { font-family: 'Montserrat', sans-serif; font-size: 2rem; color: var(--gold); opacity: 0.35; margin: 0 0.5rem; padding-bottom: 1.5rem; align-self: center; }
+  .countdown-message { text-align: center; margin-top: 2rem; font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 1.1rem; color: var(--text-light); letter-spacing: 0.1em; }
+
+  /* PHOTOS */
+  #photos { background: var(--warm-white); }
+  .photo-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.5rem; max-width: 720px; margin: 0 auto; }
+  .photo-slot { position: relative; border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, #f0e8dc, #e4ede9); box-shadow: var(--shadow-card); border: 1px solid var(--border-subtle); cursor: pointer; }
+  .photo-slot.tall { aspect-ratio: 3/4; }
+  .photo-slot.square { aspect-ratio: 1/1; align-self: start; }
+  .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+  .photo-slot:hover img { transform: scale(1.03); }
+  .photo-slot-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
+  .ph-icon { font-size: 2rem; opacity: 0.35; }
+  .ph-label { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 0.8rem; letter-spacing: 0.18em; color: var(--text-light); opacity: 0.8; }
+  .photo-slot.empty::after { content: ''; position: absolute; inset: 12px; border: 1.5px dashed rgba(212,163,115,0.4); border-radius: 12px; pointer-events: none; }
+  .photo-slot input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 2; }
+
+  /* TIMELINE */
+  #details { background: var(--cream); }
+  .timeline { position: relative; max-width: 420px; margin: 0 auto; }
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+    text-align: left;
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-dot {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: white; border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(212,163,115,0.25);
+  }
+  .timeline-text { }
+  .timeline-time { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 0.82rem; letter-spacing: 0.15em; color: var(--gold); display: block; }
+
+  .location-card { background: white; border: 1px solid var(--border-subtle); border-radius: 20px; overflow: hidden; max-width: 560px; margin: 3rem auto 0; box-shadow: var(--shadow-soft); }
+  .location-card-header { background: linear-gradient(135deg, #8b7355, #b09070); padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; color: white; text-align: left; }
+  .lch-title { font-family: 'Montserrat', sans-serif; font-size: 1.15rem; letter-spacing: 0.1em; }
+  .lch-sub { font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0.85; font-family: 'Montserrat', sans-serif; font-style: italic; }
+  .location-card-body { padding: 1.5rem; text-align: left; }
+  .v-card-row { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.9rem; text-align: left; }
+  .v-card-row:last-child { margin-bottom: 0; }
+  .v-card-row-icon { width: 28px; height: 28px; border-radius: 50%; background: rgba(212,163,115,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .v-card-row-text { font-size: 0.85rem; color: var(--text-mid); line-height: 1.7; letter-spacing: 0.05em; text-align: left; }
+  .v-card-row-label { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.15em; display: block; margin-bottom: 0.1rem; }
+  .nowrap { white-space: nowrap; }
+
+  /* ACCORDION */
+  .accordion { border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; margin-top: 1.25rem; background: white; box-shadow: var(--shadow-soft); }
+  .accordion-trigger { width: 100%; background: none; border: none; cursor: pointer; padding: 1.1rem 1.4rem; display: flex; align-items: center; justify-content: space-between; font-family: 'Noto Sans TC', sans-serif; font-size: 0.85rem; color: var(--text-dark); letter-spacing: 0.1em; transition: background 0.2s; text-align: left; }
+  .accordion-trigger:hover { background: rgba(212,163,115,0.06); }
+  .accordion-trigger-left { display: flex; align-items: center; gap: 0.65rem; }
+  .accordion-icon-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); opacity: 0.55; flex-shrink: 0; }
+  .accordion-chevron { width: 16px; height: 16px; border-right: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold); transform: rotate(45deg); transition: transform 0.3s; flex-shrink: 0; }
+  .accordion-item.open .accordion-chevron { transform: rotate(-135deg); }
+  .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+  .accordion-item.open .accordion-body { max-height: 600px; }
+  .accordion-body-inner { padding: 0 1.4rem 1.25rem; border-top: 1px solid var(--border-subtle); padding-top: 1.1rem; }
+  .accordion-item + .accordion-item { border-top: 1px solid var(--border-subtle); }
+  .transport-row { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 0.8rem; font-size: 0.81rem; color: var(--text-mid); line-height: 1.7; }
+  .transport-badge { display: inline-block; padding: 0.12rem 0.55rem; border-radius: 20px; font-size: 0.64rem; letter-spacing: 0.08em; font-weight: 500; flex-shrink: 0; margin-top: 0.15rem; white-space: nowrap; }
+  .badge-mrt { background: rgba(141,163,153,0.2); color: var(--sage); border: 1px solid rgba(141,163,153,0.4); }
+  .badge-bus { background: rgba(212,163,115,0.15); color: var(--gold); border: 1px solid rgba(212,163,115,0.3); }
+  .badge-car { background: rgba(180,150,130,0.12); color: #8b6e60; border: 1px solid rgba(180,150,130,0.3); }
+
+  /* RSVP */
+  #rsvp { background: linear-gradient(160deg, #ede8e0 0%, #e2ebe8 60%, #ece5dc 100%); }
+  .rsvp-card { background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.92); border-radius: 24px; padding: 3rem 2.5rem; box-shadow: var(--shadow-card); max-width: 640px; margin: 0 auto; }
+  .setup-notice { background: rgba(212,163,115,0.08); border: 1px dashed rgba(212,163,115,0.45); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; font-size: 0.78rem; color: var(--text-mid); line-height: 2; letter-spacing: 0.04em; }
+  .setup-notice strong { color: #b8813a; font-weight: 600; }
+  .setup-notice code { background: rgba(212,163,115,0.18); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.76rem; color: var(--text-dark); font-family: monospace; }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-label { display: block; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--text-mid); margin-bottom: 0.5rem; font-family: 'Noto Sans TC', sans-serif; }
+  .form-label .label-en { font-family: 'Montserrat', sans-serif; font-style: italic; color: var(--gold); font-size: 0.75rem; letter-spacing: 0.2em; margin-left: 0.4rem; opacity: 0.8; }
+  .form-input, .form-select { width: 100%; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 0.75rem 1rem; font-family: 'Noto Sans TC', sans-serif; font-size: 0.88rem; color: var(--text-dark); background: rgba(255,255,255,0.8); transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none; -webkit-appearance: none; }
+  .form-input:focus, .form-select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,163,115,0.12); background: white; }
+  .form-input::placeholder { color: var(--text-light); font-style: italic; }
+  .form-select-wrap { position: relative; }
+  .form-select-wrap::after { content: ''; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%) rotate(45deg); width: 8px; height: 8px; border-right: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold); pointer-events: none; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .smart-fields { overflow: hidden; transition: max-height 0.45s ease, opacity 0.35s ease; max-height: 0; opacity: 0; }
+  .smart-fields.visible { max-height: 500px; opacity: 1; }
+  .form-textarea { width: 100%; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 0.75rem 1rem; font-family: 'Noto Sans TC', sans-serif; font-size: 0.88rem; color: var(--text-dark); background: rgba(255,255,255,0.8); resize: vertical; min-height: 80px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+  .form-textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,163,115,0.12); }
+  .form-submit { width: 100%; background: linear-gradient(135deg, var(--gold) 0%, #c99260 100%); color: white; border: none; border-radius: 12px; padding: 1rem; font-family: 'Noto Sans TC', sans-serif; font-size: 0.9rem; letter-spacing: 0.2em; cursor: pointer; transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s; margin-top: 0.5rem; box-shadow: 0 4px 16px rgba(212,163,115,0.35); }
+  .form-submit:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(212,163,115,0.4); }
+  .form-submit:active { transform: translateY(0); }
+  .form-note { text-align: center; font-size: 0.72rem; color: var(--text-light); margin-top: 1.25rem; letter-spacing: 0.08em; line-height: 1.7; }
+  .success-message { display: none; text-align: center; padding: 2rem; }
+  .success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .success-title { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; }
+  .success-text { font-size: 0.85rem; color: var(--text-light); line-height: 1.8; }
+
+  /* FOOTER */
+  footer { background: var(--text-dark); color: rgba(255,255,255,0.5); text-align: center; padding: 2.5rem 1.5rem; }
+  .footer-names { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 1.4rem; color: var(--gold-light); letter-spacing: 0.12em; margin-bottom: 0.5rem; opacity: 0.85; }
+  .footer-text { font-size: 0.72rem; letter-spacing: 0.15em; line-height: 2; }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .nav-logo { font-size: 1.05rem; }
+    .nav-links a { font-size: 0.63rem; padding: 0.38rem 0.55rem; letter-spacing: 0.05em; }
+    .countdown-card { min-width: 64px; padding: 0.85rem 0.6rem 0.75rem; }
+    .countdown-number { font-size: 1.75rem; }
+    .countdown-sep { font-size: 1.2rem; margin: 0 0.2rem; }
+    .photo-grid { grid-template-columns: 1fr; }
+    .photo-slot.tall { aspect-ratio: 4/3; }
+    .rsvp-card { padding: 2rem 1.25rem; }
+    .form-row { grid-template-columns: 1fr; }
+    section { padding: 4rem 1rem; }
+  }
+  @media (max-width: 400px) {
+    .countdown-card { min-width: 56px; }
+    .countdown-sep { margin: 0 0.1rem; }
+  }
+
+  /* Our Story Dynamic Entrance */
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-on-scroll.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .photo-slot {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: var(--shadow-soft);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 1s ease-out;
+  }
+  .photo-slot.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .photo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .photo-slot:hover img {
+    transform: scale(1.05);
+  }
+
+
+  #details .section-inner {
+    text-align: center;
+  }
+  /* Location card body is left-aligned */
+  .location-card-body, .location-card-body * {
+    text-align: left;
+  }
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .info-item i, .info-item .icon {
+    margin-right: 0 !important;
+    margin-bottom: 0.5rem;
+  }
+  .address-link {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: opacity 0.3s;
+  }
+  .address-link:hover {
+    opacity: 0.8;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">信安 &amp; 韻玄</div>
+  <ul class="nav-links">
+    <li><a href="#photos">關於我們</a></li>
+    <li><a href="#details">婚禮詳情</a></li>
+    <li><a href="#rsvp">出席回函</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Wedding Invitation</p>
+    <h1 class="hero-names">
+      <span>信安</span><span class="ampersand">&amp;</span><span>韻玄</span>
+    </h1>
+    <p style="font-family:'Montserrat',sans-serif;font-style:italic;color:var(--gold);font-size:1.15rem;letter-spacing:0.18em;margin-bottom:0.5rem;">Hsin An &amp; Yun Hsuan</p>
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <div class="hero-divider-ornament">✦</div>
+      <div class="hero-divider-line right"></div>
+    </div>
+    <p class="hero-date">2026 年 11 月 14 日 (六) 午宴</p>
+    <p class="hero-location">台中 · 与玥樓</p>
+  </div>
+  <div class="scroll-hint"><span>SCROLL</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- COUNTDOWN -->
+<section id="countdown-section">
+  <div class="section-inner">
+    <p class="section-label">Time Remaining</p>
+    <h2 class="section-title">距離婚禮</h2>
+    <p class="section-subtitle">每一天都是我們相聚的倒數</p>
+    <div class="countdown-wrapper">
+      <div class="countdown-unit">
+        <div class="countdown-card">
+          <span class="countdown-number" id="cd-days">---</span>
+          <div class="countdown-divider"></div>
+          <span class="countdown-label-zh">天</span>
+          <span class="countdown-label-en">Days</span>
+        </div>
+      </div>
+      <div class="countdown-sep">·</div>
+      <div class="countdown-unit">
+        <div class="countdown-card">
+          <span class="countdown-number" id="cd-hours">--</span>
+          <div class="countdown-divider"></div>
+          <span class="countdown-label-zh">時</span>
+          <span class="countdown-label-en">Hours</span>
+        </div>
+      </div>
+      <div class="countdown-sep">·</div>
+      <div class="countdown-unit">
+        <div class="countdown-card">
+          <span class="countdown-number" id="cd-mins">--</span>
+          <div class="countdown-divider"></div>
+          <span class="countdown-label-zh">分</span>
+          <span class="countdown-label-en">Mins</span>
+        </div>
+      </div>
+      <div class="countdown-sep">·</div>
+      <div class="countdown-unit">
+        <div class="countdown-card">
+          <span class="countdown-number" id="cd-secs">--</span>
+          <div class="countdown-divider"></div>
+          <span class="countdown-label-zh">秒</span>
+          <span class="countdown-label-en">Secs</span>
+        </div>
+      </div>
+    </div>
+    <p class="countdown-message" id="countdown-message">We can't wait to celebrate with you</p>
+  </div>
+</section>
+
+
+<!-- PHOTOS: 我們的故事 -->
+<section id="photos">
+  <div class="section-inner">
+    <p class="section-label reveal-on-scroll">Our Story</p>
+    <h2 class="section-title reveal-on-scroll">我們的故事</h2>
+    <div class="ornamental-divider reveal-on-scroll">
+      <div class="ornamental-divider-line"></div>
+      <span>✦</span>
+      <div class="ornamental-divider-line right"></div>
+    </div>
+
+    <!-- 文字故事區 -->
+    <div class="story-content reveal-on-scroll" style="max-width: 650px; margin: 0 auto 3.5rem; text-align: center; line-height: 2.2; color: var(--text-mid); font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.05em;">
+      <p style="margin-bottom: 1.5rem;">
+        十年前，我們相遇。<br>
+        在愛情長跑的日子裡，<br>
+        一步一步，走向彼此的未來。
+      </p>
+      <p style="margin-bottom: 1.5rem;">
+        於是我們決定 —— <br>
+        安心相守，玄定是你。
+      </p>
+      <p>
+        你們，<br>
+        都是我們生命中重要的人，<br>
+        誠摯地邀請你們一起來見證我們的幸福。
+      </p>
+    </div>
+
+    <div class="photo-grid">
+      <!-- 照片 1 -->
+      <div class="photo-slot tall reveal-on-scroll" style="transition-delay: 0.2s;">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop" alt="Our Story 1">
+      </div>
+      <!-- 照片 2 -->
+      <div class="photo-slot square reveal-on-scroll" style="transition-delay: 0.4s;">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop" alt="Our Story 2">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DETAILS + TIMELINE -->
+<section id="details">
+  <div class="section-inner">
+    <p class="section-label">Wedding Details</p>
+    <h2 class="section-title">婚禮詳情</h2>
+    <div class="ornamental-divider">
+      <div class="ornamental-divider-line"></div>
+      <span>✦</span>
+      <div class="ornamental-divider-line right"></div>
+    </div>
+    <p style="text-align:center;font-family:'Noto Serif TC',serif;font-size:0.82rem;color:var(--text-light);letter-spacing:0.15em;margin-bottom:2.75rem;">2026 年 11 月 14 日 (六) · 流程</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot">🌿</div>
+        <div class="timeline-text"><span class="timeline-time">10:00 AM — 賓客入場</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">💍</div>
+        <div class="timeline-text"><span class="timeline-time">10:30 AM — 證婚儀式</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">🥂</div>
+        <div class="timeline-text"><span class="timeline-time">12:00 PM — 午宴入席</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">🍽️</div>
+        <div class="timeline-text"><span class="timeline-time">12:15 PM — 午宴開始</span></div>
+      </div>
+    </div>
+
+    <!-- Location Card -->
+    <div class="location-card">
+      <div class="location-card-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <p class="lch-title">婚禮場地</p>
+          <p class="lch-sub">Venue Information</p>
+        </div>
+      </div>
+      <div class="location-card-body">
+        <div class="v-card-row">
+          <div class="v-card-row-text" style="width:100%;">
+            <span class="v-card-row-label">場地 Venue</span>
+            <span style="font-size:0.90rem;color:var(--text-dark);font-weight:500;display:block;margin-bottom:0.2rem;">与玥樓 二樓</span>
+            <span style="font-size:0.82rem;color:var(--text-mid);">台中市南屯區公益路二段783號</span>
+          </div>
+        </div>
+        <div class="v-card-row" style="margin-top:0.75rem;">
+          <div class="v-card-row-text" style="width:100%;">
+            <span class="v-card-row-label">停車 Parking</span>
+            <span style="font-size:0.82rem;color:var(--text-mid);">附平面停車場</span>
+          </div>
+        </div>
+        <div class="v-card-row" style="margin-top:0.75rem;">
+          <div class="v-card-row-text" style="width:100%;">
+            <a href="https://maps.google.com/?q=台中市南屯區公益路二段783號" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:0.45rem;background:rgba(212,163,115,0.12);border:1px solid rgba(212,163,115,0.35);border-radius:20px;padding:0.4rem 1rem;font-size:0.75rem;color:var(--gold);text-decoration:none;letter-spacing:0.08em;transition:background 0.2s;"
+               onmouseover="this.style.background='rgba(212,163,115,0.22)'" onmouseout="this.style.background='rgba(212,163,115,0.12)'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Google Maps 查看路線
+            </a>
+          </div>
+        </div>
+
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+              <span class="accordion-trigger-left"><span class="accordion-icon-dot" style="background:var(--sage);"></span>🚌 大眾運輸</span>
+              <span class="accordion-chevron"></span>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-body-inner">
+                <div class="transport-row">
+                  <span class="transport-badge badge-bus">公車</span>
+                  <span>路，於<span class="nowrap">站</span>下車</span>
+                </div>
+                <div class="transport-row">
+                  <span class="transport-badge badge-car">叫車</span>
+                  <span>Uber / Line Taxi，搜尋「<span class="nowrap">与玥樓</span>」導航</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+              <span class="accordion-trigger-left"><span class="accordion-icon-dot" style="background:#c0a080;"></span>🚕 自行開車</span>
+              <span class="accordion-chevron"></span>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-body-inner">
+                <div class="transport-row">
+                  <span class="transport-badge badge-car">自駕</span>
+                  <span>由<span class="nowrap">公益路二段</span>進入</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section id="rsvp">
+  <div class="section-inner">
+    <p class="section-label">RSVP</p>
+    <h2 class="section-title">出席回函</h2>
+    <div class="rsvp-card">
+
+      <div id="form-area">
+        <form id="rsvp-form" onsubmit="submitForm(event)">
+
+          <div class="form-group">
+            <label class="form-label" for="f-name">姓名 <span class="label-en">NAME</span></label>
+            <input class="form-input" type="text" id="f-name" placeholder="您的姓名" required autocomplete="off">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="f-side">與新人關係 <span class="label-en">GUEST OF</span></label>
+              <div class="form-select-wrap">
+                <select class="form-select" id="f-side" required>
+                  <option value="">請選擇</option>
+                  <option value="新郎親屬">新郎親戚</option>
+                  <option value="新郎朋友">新郎朋友</option>
+                  <option value="新娘親屬">新娘親戚</option>
+                  <option value="新娘朋友">新娘朋友</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-attendance">出席範圍 <span class="label-en">ATTENDANCE</span></label>
+              <div class="form-select-wrap">
+                <select class="form-select" id="f-attendance" required>
+                  <option value="">請選擇</option>
+                  <option value="全程出席（證婚 + 喜宴）">全程出席（證婚 + 喜宴）</option>
+                  <option value="僅出席喜宴">僅出席喜宴</option>
+                  <option value="無法出席">無法出席，敬祝新人幸福</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-luncheon-count">參加宴客人數（含本人）<span class="label-en">LUNCHEON GUESTS</span></label>
+            <input class="form-input" type="number" id="f-luncheon-count" placeholder="0" min="0" max="6" autocomplete="off" oninput="handleLuncheonCount(this.value)">
+          </div>
+
+          <div class="smart-fields" id="smart-fields">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="f-diet">飲食需求 <span class="label-en">DIETARY</span></label>
+                <div class="form-select-wrap">
+                  <select class="form-select" id="f-diet">
+                    <option value="">請選擇</option>
+                    <option value="葷食">葷食</option>
+                    <option value="葷食海鮮過敏">葷食海鮮過敏</option>
+                    <option value="素食">素食</option>
+                    <option value="素食菇類過敏">素食菇類過敏</option>
+                    <option value="其他（請備註）">其他（請備註）</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-highchair">兒童椅需求 <span class="label-en">HIGH CHAIR</span></label>
+                <div class="form-select-wrap">
+                  <select class="form-select" id="f-highchair">
+                    <option value="">請選擇</option>
+                    <option value="不需要">不需要</option>
+                    <option value="需要 1 張">需要 1 張</option>
+                    <option value="需要 2 張">需要 2 張</option>
+                    <option value="需要 3 張以上">需要 3 張以上</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" id="message-field" style="display:none;">
+            <label class="form-label" for="f-message">祝福留言 <span class="label-en">MESSAGE</span></label>
+            <textarea class="form-textarea" id="f-message" placeholder="留下您對我們的祝福與話語…"></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">送出回函　SUBMIT RSVP</button>
+
+        </form>
+      </div>
+
+      <div class="success-message" id="success-msg">
+        <div class="success-icon">💌</div>
+        <p class="success-title">感謝您的回覆！</p>
+        <p class="success-text">Thank you for responding.<br>We look forward to celebrating with you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-names">信安 &amp; 韻玄 · 2026.11.14</p>
+  <p class="footer-text">We would like to express our sincerest gratitude <br> for celebrating our wedding with us.</p>
+</footer>
+
+<iframe id="hidden-iframe" name="hidden-iframe" style="display:none;"></iframe>
+
+<script>
+// ══════════════════════════════════════════════
+// ★ GOOGLE FORM CONFIG — fill these in ★
+// ══════════════════════════════════════════════
+// FORM_URL: 從 Google 表單取得「預填連結」，
+//   將網址中的 /viewform?usp=pp_url 改為 /formResponse
+const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfGCqjntw5e6Ez1u3pUToNv1AW4g_KL4WN9QP9OjFGuZIFjyQ/formResponse';
+
+// 每個欄位的 entry ID，從預填連結中複製
+const ENTRY = {
+  name:       'entry.528690762',  // 姓名
+  side:       'entry.1912066957',  // 與新人關係
+  attendance: 'entry.1797793381',  // 出席範圍
+  luncheon:   'entry.1945336297',  // 宴客人數
+  diet:       'entry.321239529',  // 飲食需求
+  highchair:  'entry.1717141116',  // 兒童椅
+  message:    'entry.774080120',  // 祝福留言
+};
+// ══════════════════════════════════════════════
+
+// ── Countdown with flip animation ──
+(function(){
+  const target = new Date('2026-11-14T10:30:00+08:00');
+  const prev = {};
+
+  function pad(n, w){ return String(n).padStart(w,'0'); }
+
+  function setFlip(id, val){
+    const el = document.getElementById(id);
+    if(!el) return;
+    if(prev[id] !== val){
+      el.classList.remove('flip');
+      void el.offsetWidth;
+      el.textContent = val;
+      el.classList.add('flip');
+      prev[id] = val;
+    }
+  }
+
+  function tick(){
+    const diff = target - new Date();
+    if(diff <= 0){
+      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
+        document.getElementById(id).textContent = '00';
+      });
+      document.getElementById('countdown-message').textContent = '今天是我們的大日子！🎉';
+      return;
+    }
+    const d = Math.floor(diff/86400000);
+    const h = Math.floor((diff%86400000)/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    setFlip('cd-days',  pad(d,3));
+    setFlip('cd-hours', pad(h,2));
+    setFlip('cd-mins',  pad(m,2));
+    setFlip('cd-secs',  pad(s,2));
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+
+// ── Hero photo upload ──
+function loadHeroPhoto(input){
+  const file = input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const img = document.getElementById('hero-img');
+    img.src = e.target.result;
+    img.style.display = 'block';
+    // Fade the hero gradient overlay slightly so photo shows
+    document.querySelector('.hero').style.background = 'linear-gradient(160deg, rgba(245,237,224,0.55) 0%, rgba(237,232,223,0.45) 25%, rgba(221,231,227,0.45) 55%, rgba(232,223,212,0.45) 80%, rgba(240,232,218,0.55) 100%)';
+    // Hide upload button after upload
+    document.getElementById('hero-upload-label').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+
+
+function loadPhoto(input, slotId){
+  const file = input.files[0];
+  if(!file) return;
+  const slot = document.getElementById(slotId);
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const ph = slot.querySelector('.photo-slot-placeholder');
+    if(ph) ph.remove();
+    slot.classList.remove('empty');
+    let img = slot.querySelector('img');
+    if(!img){ img = document.createElement('img'); slot.insertBefore(img, slot.querySelector('input')); }
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+
+// ── Accordion ──
+function toggleAccordion(btn){
+  const item = btn.closest('.accordion-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.accordion-item.open').forEach(el => el.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+
+// ── Smart form logic ──
+function handleLuncheonCount(val){
+  const n = parseInt(val, 10);
+  const smart = document.getElementById('smart-fields');
+  const msgField = document.getElementById('message-field');
+  if(!isNaN(n) && n > 0){
+    // 人數 > 0：顯示飲食、兒童椅、祝福
+    smart.classList.add('visible');
+    msgField.style.display = 'block';
+  } else if(!isNaN(n) && n === 0){
+    // 人數 = 0：只顯示祝福
+    smart.classList.remove('visible');
+    msgField.style.display = 'block';
+  } else {
+    // 空白：全部隱藏
+    smart.classList.remove('visible');
+    msgField.style.display = 'none';
+  }
+}
+
+
+// ── Form submit via hidden iframe ──
+function submitForm(e){
+  e.preventDefault();
+  const params = new URLSearchParams({
+    [ENTRY.name]:       document.getElementById('f-name').value.trim(),
+    [ENTRY.side]:       document.getElementById('f-side').value,
+    [ENTRY.attendance]: document.getElementById('f-attendance').value,
+    [ENTRY.luncheon]:   document.getElementById('f-luncheon-count').value || '0',
+    [ENTRY.diet]:       document.getElementById('f-diet').value,
+    [ENTRY.highchair]:  document.getElementById('f-highchair').value,
+    [ENTRY.message]:    document.getElementById('f-message').value.trim(),
+  });
+  document.getElementById('hidden-iframe').src = FORM_URL + '?' + params.toString();
+  setTimeout(()=>{
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  }, 700);
+}
+</script>
+
+<script>
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
