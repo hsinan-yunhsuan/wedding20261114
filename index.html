@@ -628,7 +628,6 @@
         <p class="success-title">感謝您的回覆！</p>
         <p class="success-text">
           Thank you for responding.<br>We look forward to celebrating with you.<br><br>
-          <span style="font-size:0.75rem;color:var(--text-light);">建議截圖保存此頁面，作為回覆確認。</span>
         </p>
       </div>
 
@@ -813,18 +812,21 @@ function submitForm(e){
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtdzhkD040tZPjXfz2SbM8uNmCpy6UZzkAvZfzaigK42jU0ywxsVepY8Xl2lBcc9JV/exec';
   const FORM_VIEWURL = 'https://docs.google.com/forms/d/e/1FAIpQLSfGCqjntw5e6Ez1u3pUToNv1AW4g_KL4WN9QP9OjFGuZIFjyQ/viewform';
 
+  // 用 FormData + no-cors，繞過 CORS 限制
+  // Apps Script 用 e.parameter 接收資料
+  const formData = new FormData();
+  Object.keys(body).forEach(k => formData.append(k, body[k]));
+
   fetch(SCRIPT_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  }).then(res => res.json()).then(data => {
-    if (data.result === 'success') {
-      document.getElementById('form-area').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-    } else {
-      showError();
-    }
+    mode: 'no-cors',
+    body: formData,
+  }).then(() => {
+    // fetch resolve = 請求已送達伺服器
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
   }).catch(() => {
+    // fetch reject = 網路層完全失敗（例如無法連線）
     showError();
   }).finally(() => {
     btn.disabled = false;
