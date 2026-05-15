@@ -638,7 +638,7 @@
   <p class="footer-text">We would like to express our sincerest gratitude <br> for celebrating our wedding with us.</p>
 </footer>
 
-<iframe id="hidden-iframe" name="hidden-iframe" style="display:none;"></iframe>
+
 
 <script>
 // ══════════════════════════════════════════════
@@ -767,7 +767,7 @@ function handleLuncheonCount(val){
 }
 
 
-// ── Form submit via hidden iframe ──
+// ── Form submit via fetch (no-cors) ──
 function submitForm(e){
   e.preventDefault();
   const params = new URLSearchParams({
@@ -779,11 +779,15 @@ function submitForm(e){
     [ENTRY.highchair]:  document.getElementById('f-highchair').value,
     [ENTRY.message]:    document.getElementById('f-message').value.trim(),
   });
-  document.getElementById('hidden-iframe').src = FORM_URL + '?' + params.toString();
-  setTimeout(()=>{
-    document.getElementById('form-area').style.display = 'none';
-    document.getElementById('success-msg').style.display = 'block';
-  }, 700);
+  fetch(FORM_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString(),
+  }).catch(() => {});
+
+  document.getElementById('form-area').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
 }
 </script>
 
