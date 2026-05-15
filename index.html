@@ -568,7 +568,7 @@
             <div class="form-group">
               <label class="form-label" for="f-attendance">出席範圍 <span class="label-en">ATTENDANCE</span></label>
               <div class="form-select-wrap">
-                <select class="form-select" id="f-attendance" required>
+                <select class="form-select" id="f-attendance" required onchange="handleAttendance(this.value)">
                   <option value="">請選擇</option>
                   <option value="全程出席（證婚 + 喜宴）">一定要全程出席！！（證婚 + 喜宴）</option>
                   <option value="僅出席喜宴">僅出席喜宴</option>
@@ -578,7 +578,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" id="luncheon-field">
             <label class="form-label" for="f-luncheon-count">參加宴客人數（含本人）<span class="label-en">LUNCHEON GUESTS</span></label>
             <input class="form-input" type="number" id="f-luncheon-count" placeholder="0" min="0" max="6" autocomplete="off" oninput="handleLuncheonCount(this.value)">
           </div>
@@ -765,20 +765,46 @@ function toggleAccordion(btn){
 
 
 // ── Smart form logic ──
+function handleAttendance(val){
+  const luncheonField = document.getElementById('luncheon-field');
+  const smart         = document.getElementById('smart-fields');
+  const msgField      = document.getElementById('message-field');
+
+  if(val === '無法出席'){
+    // 無法出席：隱藏人數、飲食、兒童椅，只顯示祝福
+    luncheonField.style.display = 'none';
+    smart.classList.remove('visible');
+    msgField.style.display = 'block';
+    document.getElementById('f-luncheon-count').value = '0';
+  } else if(val === ''){
+    // 未選：全部隱藏
+    luncheonField.style.display = 'block';
+    smart.classList.remove('visible');
+    msgField.style.display = 'none';
+    document.getElementById('f-luncheon-count').value = '';
+  } else {
+    // 有出席：顯示人數欄位，其他欄位依人數決定
+    luncheonField.style.display = 'block';
+    msgField.style.display = 'none';
+    smart.classList.remove('visible');
+    document.getElementById('f-luncheon-count').value = '';
+  }
+}
+
 function handleLuncheonCount(val){
+  const attendance = document.getElementById('f-attendance').value;
+  if(attendance === '無法出席') return; // 無法出席時不處理
+
   const n = parseInt(val, 10);
-  const smart = document.getElementById('smart-fields');
+  const smart    = document.getElementById('smart-fields');
   const msgField = document.getElementById('message-field');
   if(!isNaN(n) && n > 0){
-    // 人數 > 0：顯示飲食、兒童椅、祝福
     smart.classList.add('visible');
     msgField.style.display = 'block';
   } else if(!isNaN(n) && n === 0){
-    // 人數 = 0：只顯示祝福
     smart.classList.remove('visible');
     msgField.style.display = 'block';
   } else {
-    // 空白：全部隱藏
     smart.classList.remove('visible');
     msgField.style.display = 'none';
   }
