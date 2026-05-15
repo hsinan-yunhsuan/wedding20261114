@@ -815,13 +815,15 @@ function submitForm(e){
 
   fetch(SCRIPT_URL, {
     method: 'POST',
-    mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
-  }).then(() => {
-    // no-cors 無法讀取回應，但 fetch resolve 代表請求已送出
-    document.getElementById('form-area').style.display = 'none';
-    document.getElementById('success-msg').style.display = 'block';
+  }).then(res => res.json()).then(data => {
+    if (data.result === 'success') {
+      document.getElementById('form-area').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      showError();
+    }
   }).catch(() => {
     showError();
   }).finally(() => {
