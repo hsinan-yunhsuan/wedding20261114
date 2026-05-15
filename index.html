@@ -319,6 +319,26 @@
     </div>
     <p class="hero-date">2026 年 11 月 14 日 (六) 午宴</p>
     <p class="hero-location">台中 · 与玥樓</p>
+    <a href="#rsvp" style="
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 2.2rem;
+      background: rgba(212,163,115,0.18);
+      border: 1px solid rgba(212,163,115,0.6);
+      border-radius: 40px;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      color: var(--text-dark);
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background 0.3s, border-color 0.3s;
+    "
+    onmouseover="this.style.background='rgba(212,163,115,0.32)';this.style.borderColor='rgba(212,163,115,0.9)'"
+    onmouseout="this.style.background='rgba(212,163,115,0.18)';this.style.borderColor='rgba(212,163,115,0.6)'">
+      出席回覆　RSVP
+    </a>
   </div>
   <div class="scroll-hint"><span>SCROLL</span><div class="scroll-arrow"></div></div>
 </section>
@@ -366,7 +386,6 @@
         </div>
       </div>
     </div>
-    <p class="countdown-message" id="countdown-message">We can't wait to celebrate with you</p>
   </div>
 </section>
 
@@ -429,11 +448,11 @@
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-dot">🌿</div>
-        <div class="timeline-text"><span class="timeline-time">10:00 AM — 賓客入場</span></div>
+        <div class="timeline-text"><span class="timeline-time">10:30 AM — 賓客入場</span></div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">💍</div>
-        <div class="timeline-text"><span class="timeline-time">10:30 AM — 證婚儀式</span></div>
+        <div class="timeline-text"><span class="timeline-time">11:00 AM — 證婚儀式</span></div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">🥂</div>
@@ -441,7 +460,7 @@
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">🍽️</div>
-        <div class="timeline-text"><span class="timeline-time">12:15 PM — 午宴開始</span></div>
+        <div class="timeline-text"><span class="timeline-time">12:30 PM — 午宴開始</span></div>
       </div>
     </div>
 
@@ -551,7 +570,7 @@
               <div class="form-select-wrap">
                 <select class="form-select" id="f-attendance" required>
                   <option value="">請選擇</option>
-                  <option value="全程出席（證婚 + 喜宴）">全程出席（證婚 + 喜宴）</option>
+                  <option value="全程出席（證婚 + 喜宴）">一定要全程出席！！（證婚 + 喜宴）</option>
                   <option value="僅出席喜宴">僅出席喜宴</option>
                   <option value="無法出席">無法出席，敬祝新人幸福</option>
                 </select>
@@ -572,9 +591,9 @@
                   <select class="form-select" id="f-diet">
                     <option value="">請選擇</option>
                     <option value="葷食">葷食</option>
-                    <option value="葷食海鮮過敏">葷食海鮮過敏</option>
+                    <option value="葷食海鮮過敏">葷食，但海鮮過敏</option>
                     <option value="素食">素食</option>
-                    <option value="素食菇類過敏">素食菇類過敏</option>
+                    <option value="素食菇類過敏">素食，但菇類過敏</option>
                     <option value="其他（請備註）">其他（請備註）</option>
                   </select>
                 </div>
@@ -626,7 +645,6 @@
 // ★ GOOGLE FORM CONFIG — fill these in ★
 // ══════════════════════════════════════════════
 // FORM_URL: 從 Google 表單取得「預填連結」，
-//   將網址中的 /viewform?usp=pp_url 改為 /formResponse
 const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfGCqjntw5e6Ez1u3pUToNv1AW4g_KL4WN9QP9OjFGuZIFjyQ/formResponse';
 
 // 每個欄位的 entry ID，從預填連結中複製
