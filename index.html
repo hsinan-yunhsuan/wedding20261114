@@ -626,16 +626,17 @@
       <div class="success-message" id="success-msg">
         <div class="success-icon">💌</div>
         <p class="success-title">感謝您的回覆！</p>
-        <p class="success-text">Thank you for responding.<br>We look forward to celebrating with you.<br><br>
+        <p class="success-text">
+          Thank you for responding.<br>We look forward to celebrating with you.<br><br>
           <span style="font-size:0.75rem;color:var(--text-light);">建議截圖保存此頁面，作為回覆確認。</span>
         </p>
       </div>
 
       <div class="success-message" id="error-msg" style="display:none;">
         <div class="success-icon">⚠️</div>
-        <p class="success-title" style="color:#c0704a;">網路連線異常</p>
+        <p class="success-title" style="color:#c0704a;">送出失敗</p>
         <p class="success-text" style="color:#6b5c50;">
-          回覆可能未能送達，請點下方連結直接填寫 Google 表單：<br><br>
+          網路連線異常，回覆未能送達。<br>請點下方連結直接填寫 Google 表單：<br><br>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGCqjntw5e6Ez1u3pUToNv1AW4g_KL4WN9QP9OjFGuZIFjyQ/viewform"
             target="_blank" rel="noopener"
             style="display:inline-block;margin-top:0.5rem;padding:0.7rem 1.8rem;background:linear-gradient(135deg,#d4a373,#c99260);color:white;border-radius:30px;text-decoration:none;font-size:0.82rem;letter-spacing:0.15em;">
@@ -791,36 +792,47 @@ function submitForm(e){
 
   // 離線時直接顯示錯誤
   if (!navigator.onLine) {
-    document.getElementById('error-msg').style.display = 'block';
+    showError();
     return;
   }
 
-  const params = new URLSearchParams({
-    [ENTRY.name]:       document.getElementById('f-name').value.trim(),
-    [ENTRY.side]:       document.getElementById('f-side').value,
-    [ENTRY.attendance]: document.getElementById('f-attendance').value,
-    [ENTRY.luncheon]:   document.getElementById('f-luncheon-count').value || '0',
-    [ENTRY.diet]:       document.getElementById('f-diet').value,
-    [ENTRY.highchair]:  document.getElementById('f-highchair').value,
-    [ENTRY.message]:    document.getElementById('f-message').value.trim(),
-  });
+  const btn = document.querySelector('.form-submit');
+  btn.disabled = true;
+  btn.textContent = '送出中…';
 
-  // no-cors fetch：送出後立即視為成功（Google 不回傳狀態）
-  fetch(FORM_URL, {
+  const body = {
+    name:       document.getElementById('f-name').value.trim(),
+    side:       document.getElementById('f-side').value,
+    attendance: document.getElementById('f-attendance').value,
+    luncheon:   document.getElementById('f-luncheon-count').value || '0',
+    diet:       document.getElementById('f-diet').value,
+    highchair:  document.getElementById('f-highchair').value,
+    message:    document.getElementById('f-message').value.trim(),
+  };
+
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtdzhkD040tZPjXfz2SbM8uNmCpy6UZzkAvZfzaigK42jU0ywxsVepY8Xl2lBcc9JV/exec';
+  const FORM_VIEWURL = 'https://docs.google.com/forms/d/e/1FAIpQLSfGCqjntw5e6Ez1u3pUToNv1AW4g_KL4WN9QP9OjFGuZIFjyQ/viewform';
+
+  fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params.toString(),
-  }).catch(() => {
-    // fetch 本身失敗（例如完全無法連線）才顯示錯誤
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  }).then(() => {
+    // no-cors 無法讀取回應，但 fetch resolve 代表請求已送出
     document.getElementById('form-area').style.display = 'none';
-    document.getElementById('success-msg').style.display = 'none';
-    document.getElementById('error-msg').style.display = 'block';
+    document.getElementById('success-msg').style.display = 'block';
+  }).catch(() => {
+    showError();
+  }).finally(() => {
+    btn.disabled = false;
+    btn.textContent = '送出回函　SUBMIT RSVP';
   });
+}
 
-  // 有網路就顯示成功畫面
+function showError(){
   document.getElementById('form-area').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
+  document.getElementById('error-msg').style.display = 'block';
 }
 
 function resetForm(){
