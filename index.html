@@ -405,12 +405,17 @@
     <div class="story-content reveal-on-scroll" style="max-width: 650px; margin: 0 auto 3.5rem; text-align: center; line-height: 2.2; color: var(--text-mid); font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.05em;">
       <p style="margin-bottom: 1.5rem;">
         十年前，我們相遇。<br>
-        在愛情長跑的日子裡，<br>
-        一步一步，走向彼此的未來。
+        從青澀到成熟，從陪伴到承諾，<br>
+        那些跨越距離的思念與等待，<br>
+        都慢慢成為愛最真實的模樣。
+      </p>
+      <p style="margin-bottom: 1.5rem;">
+        一路走來，<br>
+        我們一步一步，走向彼此的未來。
       </p>
       <p style="margin-bottom: 1.5rem;">
         於是我們決定 —— <br>
-        安心相守，玄定是你。
+        <strong>安心相守，玄定是你。</strong>
       </p>
       <p>
         你們，<br>
@@ -474,28 +479,35 @@
         </div>
       </div>
       <div class="location-card-body">
-        <div class="v-card-row">
-          <div class="v-card-row-text" style="width:100%;">
+
+        <a href="https://maps.google.com/?q=台中市南屯區公益路二段783號与玥樓" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:0.45rem;background:rgba(212,163,115,0.12);border:1px solid rgba(212,163,115,0.35);border-radius:20px;padding:0.4rem 1rem;font-size:0.75rem;color:var(--gold);text-decoration:none;letter-spacing:0.08em;transition:background 0.2s;margin-bottom:1.1rem;"
+           onmouseover="this.style.background='rgba(212,163,115,0.22)'" onmouseout="this.style.background='rgba(212,163,115,0.12)'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Google Maps 查看路線
+        </a>
+
+        <!-- 場地資訊 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 1.25rem;margin-bottom:1.1rem;">
+          <div>
             <span class="v-card-row-label">場地 Venue</span>
-            <span style="font-size:0.90rem;color:var(--text-dark);font-weight:500;display:block;margin-bottom:0.2rem;">与玥樓 二樓</span>
-            <span style="font-size:0.82rem;color:var(--text-mid);">台中市南屯區公益路二段783號</span>
+            <span style="font-size:0.88rem;color:var(--text-dark);font-weight:500;display:block;">与玥樓 二樓</span>
           </div>
-        </div>
-        <div class="v-card-row" style="margin-top:0.75rem;">
-          <div class="v-card-row-text" style="width:100%;">
+          <div>
             <span class="v-card-row-label">停車 Parking</span>
-            <span style="font-size:0.82rem;color:var(--text-mid);">附平面停車場</span>
+            <span style="font-size:0.82rem;color:var(--text-mid);display:block;">附第一、第二平面停車場</span>
+          </div>
+          <div style="grid-column:1/-1;">
+            <span class="v-card-row-label">地址 Address</span>
+            <span style="font-size:0.82rem;color:var(--text-mid);display:block;white-space:nowrap;">台中市南屯區公益路二段783號</span>
           </div>
         </div>
-        <div class="v-card-row" style="margin-top:0.75rem;">
-          <div class="v-card-row-text" style="width:100%;">
-            <a href="https://maps.google.com/?q=台中市南屯區公益路二段783號" target="_blank" rel="noopener"
-               style="display:inline-flex;align-items:center;gap:0.45rem;background:rgba(212,163,115,0.12);border:1px solid rgba(212,163,115,0.35);border-radius:20px;padding:0.4rem 1rem;font-size:0.75rem;color:var(--gold);text-decoration:none;letter-spacing:0.08em;transition:background 0.2s;"
-               onmouseover="this.style.background='rgba(212,163,115,0.22)'" onmouseout="this.style.background='rgba(212,163,115,0.12)'">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Google Maps 查看路線
-            </a>
-          </div>
+
+        <!-- 地圖圖片 -->
+        <div style="margin-bottom:1.25rem;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(140,110,80,0.12);">
+          <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/location.jpg"
+               alt="与玥樓地圖"
+               style="width:100%;display:block;object-fit:cover;max-height:220px;">
         </div>
 
         <div class="accordion">
@@ -507,12 +519,16 @@
             <div class="accordion-body">
               <div class="accordion-body-inner">
                 <div class="transport-row">
-                  <span class="transport-badge badge-bus">公車</span>
-                  <span>路，於<span class="nowrap">站</span>下車</span>
+                  <span class="transport-badge badge-bus">台中高鐵站</span>
+                  <span>高鐵站可轉乘公車或計程車前往。公車搭乘 160 於<span class="nowrap">「向上永春東七路口」</span>下車（行經兩站）--> 至對向車道左轉直走 --> 至<span class="nowrap">五權西路二段</span>右轉 --> 至<span class="nowrap">益豐路四段</span>右轉 --> 至<span class="nowrap">公益路口</span>迴轉 --> <span class="nowrap">与玥樓</span>在右手邊（步行約14分鐘）</span>
+                </div>
+                  <div class="transport-row">
+                  <span class="transport-badge badge-car">公車</span>
+                  <span>公車 300 → 358 轉乘：至<span class="nowrap">「永春東七路口」</span>下車，30分鐘一班。公車搭乘 300 於<span class="nowrap">「秋紅谷」</span>下車 --> 轉搭乘 358 於<span class="nowrap">「公益永春東七路口」</span>下車 --> 沿<span class="nowrap">公益路</span>往<span class="nowrap">環中路</span>方向步行 --> 至<span class="nowrap">益豐路四段</span>左轉 --> <span class="nowrap">与玥樓</span>於右手邊（步行約10分鐘）。</span>
                 </div>
                 <div class="transport-row">
                   <span class="transport-badge badge-car">叫車</span>
-                  <span>Uber / Line Taxi，搜尋「<span class="nowrap">与玥樓</span>」導航</span>
+                  <span>Uber / Line Taxi，搜尋<span class="nowrap">「与玥樓」</span>導航</span>
                 </div>
               </div>
             </div>
@@ -525,8 +541,12 @@
             <div class="accordion-body">
               <div class="accordion-body-inner">
                 <div class="transport-row">
-                  <span class="transport-badge badge-car">自駕</span>
-                  <span>由<span class="nowrap">公益路二段</span>進入</span>
+                  <span class="transport-badge badge-car">高速公路</span>
+                  <span>國道一號下<span class="nowrap">南屯交流道</span> --> 往台中方向接至<span class="nowrap">五權西路</span>直行 --> 至<span class="nowrap">益豐路四段</span>左轉 --> 至<span class="nowrap">公益路二段</span>右轉 --> 与玥樓在右手邊</span>
+                  <span class="transport-badge badge-car">快速道路</span>
+                  <span>中彰快速道路下<span class="nowrap">五權西路交流道</span> --> 公益路右轉 --> 過<span class="nowrap">益豐路四段</span> --> 与玥樓在右手邊</span>
+                  <span class="transport-badge badge-car">一般道路</span>
+                  <span>行至<span class="nowrap">公益路二段</span> --> 往<span class="nowrap">環中路</span>方向 --> 至<span class="nowrap">益豐路四段</span>迴轉 --> 与玥樓在右手邊</span>
                 </div>
               </div>
             </div>
@@ -591,7 +611,6 @@
                   <select class="form-select" id="f-diet">
                     <option value="">請選擇</option>
                     <option value="葷食">葷食</option>
-                    <option value="葷食海鮮過敏">葷食，但海鮮過敏</option>
                     <option value="素食">素食</option>
                     <option value="素食菇類過敏">素食，但菇類過敏</option>
                     <option value="其他（請備註）">其他（請備註）</option>
@@ -635,12 +654,7 @@
         <div class="success-icon">⚠️</div>
         <p class="success-title" style="color:#c0704a;">送出失敗</p>
         <p class="success-text" style="color:#6b5c50;">
-          網路連線異常，回覆未能送達。<br>請點下方連結直接填寫 Google 表單：<br><br>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGCqjntw5e6Ez1u3pUToNv1AW4g_KL4WN9QP9OjFGuZIFjyQ/viewform"
-            target="_blank" rel="noopener"
-            style="display:inline-block;margin-top:0.5rem;padding:0.7rem 1.8rem;background:linear-gradient(135deg,#d4a373,#c99260);color:white;border-radius:30px;text-decoration:none;font-size:0.82rem;letter-spacing:0.15em;">
-            開啟 Google 表單　→
-          </a>
+          網路連線異常，回覆未能送達。<br>請聯絡我們<br><br>
         </p>
         <button onclick="resetForm()" style="margin-top:1.5rem;background:none;border:1px solid var(--border-subtle);border-radius:20px;padding:0.5rem 1.2rem;font-size:0.75rem;color:var(--text-light);cursor:pointer;letter-spacing:0.1em;">
           ← 返回重新填寫
@@ -659,22 +673,6 @@
 
 
 <script>
-// ══════════════════════════════════════════════
-// ★ GOOGLE FORM CONFIG — fill these in ★
-// ══════════════════════════════════════════════
-// FORM_URL: 從 Google 表單取得「預填連結」，
-const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfGCqjntw5e6Ez1u3pUToNv1AW4g_KL4WN9QP9OjFGuZIFjyQ/formResponse';
-
-// 每個欄位的 entry ID，從預填連結中複製
-const ENTRY = {
-  name:       'entry.528690762',  // 姓名
-  side:       'entry.1912066957',  // 與新人關係
-  attendance: 'entry.1797793381',  // 出席範圍
-  luncheon:   'entry.1945336297',  // 宴客人數
-  diet:       'entry.321239529',  // 飲食需求
-  highchair:  'entry.1717141116',  // 兒童椅
-  message:    'entry.774080120',  // 祝福留言
-};
 // ══════════════════════════════════════════════
 
 // ── Countdown with flip animation ──
@@ -836,8 +834,6 @@ function submitForm(e){
   };
 
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtdzhkD040tZPjXfz2SbM8uNmCpy6UZzkAvZfzaigK42jU0ywxsVepY8Xl2lBcc9JV/exec';
-  const FORM_VIEWURL = 'https://docs.google.com/forms/d/e/1FAIpQLSfGCqjntw5e6Ez1u3pUToNv1AW4g_KL4WN9QP9OjFGuZIFjyQ/viewform';
-
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
