@@ -41,16 +41,12 @@
     height: 100vh; min-height: 600px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
-    /* ═══════════════════════════════════════════════════════
-       將下方的 Unsplash 佔位圖換成您的婚紗照網址即可，
-       例如：url('https://your-cdn.com/your-photo.jpg')
-       或放在同資料夾時寫：url('cover.jpg')
-       ═══════════════════════════════════════════════════════ */
-    background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1920&auto=format&fit=crop');
+    background-image: url('https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/cover.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
   }
+
   /* 暖色調遮罩，讓文字清晰可讀，可調整 opacity 控制透明度 */
   .hero::before {
     content: ''; position: absolute; inset: 0; z-index: 1;
@@ -63,6 +59,7 @@
     );
     pointer-events: none;
   }
+
   /* 細線幾何裝飾疊在最上 */
   .hero::after {
     content: ''; position: absolute; inset: 0; z-index: 2;
@@ -298,11 +295,11 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">信安 &amp; 韻玄</div>
+  <div class="nav-logo"><strong>安心相守，玄定是你。</strong></div>
   <ul class="nav-links">
-    <li><a href="#photos">關於我們</a></li>
-    <li><a href="#details">婚禮詳情</a></li>
-    <li><a href="#rsvp">出席回函</a></li>
+    <li><a href="#photos">About</a></li>
+    <li><a href="#details">Detail</a></li>
+    <li><a href="#rsvp">RSVP</a></li>
   </ul>
 </nav>
 
@@ -429,11 +426,11 @@
     <div class="photo-grid">
       <!-- 照片 1 -->
       <div class="photo-slot tall reveal-on-scroll" style="transition-delay: 0.2s;">
-        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop" alt="Our Story 1">
+        <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/story1.jpg" alt="Our Story 1">
       </div>
       <!-- 照片 2 -->
       <div class="photo-slot square reveal-on-scroll" style="transition-delay: 0.4s;">
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop" alt="Our Story 2">
+        <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/story2.jpg" alt="Our Story 2">
       </div>
     </div>
   </div>
@@ -463,11 +460,11 @@
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">🥂</div>
-        <div class="timeline-text"><span class="timeline-time">12:00 PM — 午宴入席</span></div>
+        <div class="timeline-text"><span class="timeline-time">12:15 PM — 午宴入席</span></div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">🍽️</div>
-        <div class="timeline-text"><span class="timeline-time">12:30 PM — 午宴開始</span></div>
+        <div class="timeline-text"><span class="timeline-time">12:45 PM — 午宴開始</span></div>
       </div>
     </div>
 
@@ -485,8 +482,8 @@
         <!-- 圖片 -->
         <div style="margin-bottom:1.25rem;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(140,110,80,0.12);">
           <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/location.jpg"
-               alt="与玥樓地圖"
-               style="width:100%;display:block;object-fit:cover;max-height:220px;">
+              alt="与玥樓地圖"
+              style="width:100%;display:block;">
         </div>
 
         <!-- 場地 → 地址 → 停車 垂直排列 -->
@@ -526,22 +523,22 @@
                 <div class="transport-row">
                   <span class="transport-badge badge-bus">高鐵轉乘</span>
                   <div>
-                    <div style="margin-bottom:0.4rem;">台中高鐵站可轉乘公車 160 或計程車前往</div>
+                    <div style="margin-bottom:0.4rem;">台中高鐵站可轉乘公車 160 或計程車前往。</div>
                     <span>公車160 至<span class="nowrap">「向上永春東七路口」</span>下車
                     <span class="t-arrow">→</span>對向車道左轉直走
                     <span class="t-arrow">→</span><span class="nowrap">五權西路二段</span>右轉
                     <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>右轉
-                    <span class="t-arrow">→</span><span class="nowrap">公益路口</span>迴轉
+                    <span class="t-arrow">→</span><span class="nowrap">公益路二段路口</span>迴轉
                     <span class="t-arrow">→</span><span class="t-dest">与玥樓（步行約14分鐘）</span></span>
                   </div>
                 </div>
                 <div class="transport-row">
                   <span class="transport-badge badge-car">公車轉乘</span>
                   <div>
-                    <div style="margin-bottom:0.4rem;">300 → 358 轉乘（30分鐘一班）</div>
+                    <div style="margin-bottom:0.4rem;">300 → 358 轉乘，30分鐘一班。</div>
                     <span>公車300 至<span class="nowrap">「秋紅谷」</span>下車
                     <span class="t-arrow">→</span>轉搭358 至<span class="nowrap">「公益永春東七路口」</span>下車
-                    <span class="t-arrow">→</span>沿<span class="nowrap">公益路</span>往<span class="nowrap">環中路</span>步行
+                    <span class="t-arrow">→</span>沿<span class="nowrap">公益路二段</span>往<span class="nowrap">環中路</span>步行
                     <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>左轉
                     <span class="t-arrow">→</span><span class="t-dest">与玥樓（步行約10分鐘）</span></span>
                   </div>
@@ -566,21 +563,21 @@
                   <span class="t-arrow">→</span>往台中方向接<span class="nowrap">五權西路</span>直行
                   <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>左轉
                   <span class="t-arrow">→</span><span class="nowrap">公益路二段</span>右轉
-                  <span class="t-arrow">→</span><span class="t-dest">与玥樓在右手邊</span></span>
+                  <span class="t-arrow">→</span><span class="t-dest">与玥樓</span></span>
                 </div>
                 <div class="transport-row">
                   <span class="transport-badge badge-car">快速道路</span>
                   <span>中彰快速道路下<span class="nowrap">五權西路交流道</span>
-                  <span class="t-arrow">→</span><span class="nowrap">公益路</span>右轉
+                  <span class="t-arrow">→</span><span class="nowrap">公益路二段</span>右轉
                   <span class="t-arrow">→</span>過<span class="nowrap">益豐路四段</span>
-                  <span class="t-arrow">→</span><span class="t-dest">与玥樓在右手邊</span></span>
+                  <span class="t-arrow">→</span><span class="t-dest">与玥樓</span></span>
                 </div>
                 <div class="transport-row">
                   <span class="transport-badge badge-car">一般道路</span>
                   <span>行至<span class="nowrap">公益路二段</span>
                   <span class="t-arrow">→</span>往<span class="nowrap">環中路</span>方向
                   <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>迴轉
-                  <span class="t-arrow">→</span><span class="t-dest">与玥樓在右手邊</span></span>
+                  <span class="t-arrow">→</span><span class="t-dest">与玥樓</span></span>
                 </div>
               </div>
             </div>
@@ -701,7 +698,7 @@
 <!-- FOOTER -->
 <footer>
   <p class="footer-names">信安 &amp; 韻玄 · 2026.11.14</p>
-  <p class="footer-text">We would like to express our sincerest gratitude <br> for celebrating our wedding with us.</p>
+  <p class="footer-text">We would like to express our sincerest gratitude for celebrating our wedding with us.</p>
 </footer>
 
 
@@ -749,42 +746,6 @@
   tick();
   setInterval(tick, 1000);
 })();
-
-
-// ── Hero photo upload ──
-function loadHeroPhoto(input){
-  const file = input.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e){
-    const img = document.getElementById('hero-img');
-    img.src = e.target.result;
-    img.style.display = 'block';
-    // Fade the hero gradient overlay slightly so photo shows
-    document.querySelector('.hero').style.background = 'linear-gradient(160deg, rgba(245,237,224,0.55) 0%, rgba(237,232,223,0.45) 25%, rgba(221,231,227,0.45) 55%, rgba(232,223,212,0.45) 80%, rgba(240,232,218,0.55) 100%)';
-    // Hide upload button after upload
-    document.getElementById('hero-upload-label').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
-}
-
-
-
-function loadPhoto(input, slotId){
-  const file = input.files[0];
-  if(!file) return;
-  const slot = document.getElementById(slotId);
-  const reader = new FileReader();
-  reader.onload = function(e){
-    const ph = slot.querySelector('.photo-slot-placeholder');
-    if(ph) ph.remove();
-    slot.classList.remove('empty');
-    let img = slot.querySelector('img');
-    if(!img){ img = document.createElement('img'); slot.insertBefore(img, slot.querySelector('input')); }
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
 
 
 // ── Accordion ──
