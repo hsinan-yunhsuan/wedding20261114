@@ -172,6 +172,8 @@
   .accordion-body-inner { padding: 0 1.4rem 1.25rem; border-top: 1px solid var(--border-subtle); padding-top: 1.1rem; }
   .accordion-item + .accordion-item { border-top: 1px solid var(--border-subtle); }
   .transport-row { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 0.8rem; font-size: 0.81rem; color: var(--text-mid); line-height: 1.7; }
+  .t-arrow { color: var(--gold); font-size: 0.75rem; margin: 0 0.2rem; opacity: 0.8; }
+  .t-dest { color: var(--text-dark); font-weight: 500; }
   .transport-badge { display: inline-block; padding: 0.12rem 0.55rem; border-radius: 20px; font-size: 0.64rem; letter-spacing: 0.08em; font-weight: 500; flex-shrink: 0; margin-top: 0.15rem; white-space: nowrap; }
   .badge-mrt { background: rgba(141,163,153,0.2); color: var(--sage); border: 1px solid rgba(141,163,153,0.4); }
   .badge-bus { background: rgba(212,163,115,0.15); color: var(--gold); border: 1px solid rgba(212,163,115,0.3); }
@@ -480,35 +482,38 @@
       </div>
       <div class="location-card-body">
 
-        <a href="https://maps.google.com/?q=台中市南屯區公益路二段783號与玥樓" target="_blank" rel="noopener"
-           style="display:inline-flex;align-items:center;gap:0.45rem;background:rgba(212,163,115,0.12);border:1px solid rgba(212,163,115,0.35);border-radius:20px;padding:0.4rem 1rem;font-size:0.75rem;color:var(--gold);text-decoration:none;letter-spacing:0.08em;transition:background 0.2s;margin-bottom:1.1rem;"
-           onmouseover="this.style.background='rgba(212,163,115,0.22)'" onmouseout="this.style.background='rgba(212,163,115,0.12)'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Google Maps 查看路線
-        </a>
-
-        <!-- 場地資訊 -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 1.25rem;margin-bottom:1.1rem;">
-          <div>
-            <span class="v-card-row-label">場地 Venue</span>
-            <span style="font-size:0.88rem;color:var(--text-dark);font-weight:500;display:block;">与玥樓 二樓</span>
-          </div>
-          <div>
-            <span class="v-card-row-label">停車 Parking</span>
-            <span style="font-size:0.82rem;color:var(--text-mid);display:block;">附第一、第二平面停車場</span>
-          </div>
-          <div style="grid-column:1/-1;">
-            <span class="v-card-row-label">地址 Address</span>
-            <span style="font-size:0.82rem;color:var(--text-mid);display:block;white-space:nowrap;">台中市南屯區公益路二段783號</span>
-          </div>
-        </div>
-
-        <!-- 地圖圖片 -->
+        <!-- 圖片 -->
         <div style="margin-bottom:1.25rem;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(140,110,80,0.12);">
           <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/location.jpg"
                alt="与玥樓地圖"
                style="width:100%;display:block;object-fit:cover;max-height:220px;">
         </div>
+
+        <!-- 場地 → 地址 → 停車 垂直排列 -->
+        <div style="display:flex;flex-direction:column;gap:0.85rem;margin-bottom:1.25rem;">
+          <div>
+            <span class="v-card-row-label">場地 Venue</span>
+            <span style="font-size:0.9rem;color:var(--text-dark);font-weight:500;display:block;margin-top:0.1rem;">与玥樓 二樓</span>
+          </div>
+          <div>
+            <span class="v-card-row-label">地址 Address</span>
+            <span style="font-size:0.84rem;color:var(--text-mid);display:block;margin-top:0.1rem;">台中市南屯區公益路二段783號</span>
+          </div>
+          <div>
+            <span class="v-card-row-label">停車 Parking</span>
+            <span style="font-size:0.84rem;color:var(--text-mid);display:block;margin-top:0.1rem;">附第一、第二平面停車場</span>
+          </div>
+        </div>
+
+        <!-- Google Maps 按鈕 -->
+        <a href="https://maps.google.com/?q=台中市南屯區公益路二段783號与玥樓" target="_blank" rel="noopener"
+           style="display:flex;align-items:center;justify-content:center;gap:0.6rem;width:100%;padding:0.8rem 1rem;background:linear-gradient(135deg,rgba(212,163,115,0.18),rgba(141,163,153,0.12));border:1px solid rgba(212,163,115,0.4);border-radius:12px;font-size:0.82rem;color:var(--gold);text-decoration:none;letter-spacing:0.12em;transition:all 0.25s;margin-bottom:1.5rem;box-sizing:border-box;"
+           onmouseover="this.style.background='linear-gradient(135deg,rgba(212,163,115,0.3),rgba(141,163,153,0.2))';this.style.borderColor='rgba(212,163,115,0.7)'"
+           onmouseout="this.style.background='linear-gradient(135deg,rgba(212,163,115,0.18),rgba(141,163,153,0.12))';this.style.borderColor='rgba(212,163,115,0.4)'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          開啟 Google Maps 導航
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
 
         <div class="accordion">
           <div class="accordion-item">
@@ -519,16 +524,31 @@
             <div class="accordion-body">
               <div class="accordion-body-inner">
                 <div class="transport-row">
-                  <span class="transport-badge badge-bus">台中高鐵站</span>
-                  <span>高鐵站可轉乘公車或計程車前往。公車搭乘 160 於<span class="nowrap">「向上永春東七路口」</span>下車（行經兩站）--> 至對向車道左轉直走 --> 至<span class="nowrap">五權西路二段</span>右轉 --> 至<span class="nowrap">益豐路四段</span>右轉 --> 至<span class="nowrap">公益路口</span>迴轉 --> <span class="nowrap">与玥樓</span>在右手邊（步行約14分鐘）</span>
+                  <span class="transport-badge badge-bus">高鐵轉乘</span>
+                  <div>
+                    <div style="margin-bottom:0.4rem;">台中高鐵站可轉乘公車 160 或計程車前往</div>
+                    <span>公車160 至<span class="nowrap">「向上永春東七路口」</span>下車
+                    <span class="t-arrow">→</span>對向車道左轉直走
+                    <span class="t-arrow">→</span><span class="nowrap">五權西路二段</span>右轉
+                    <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>右轉
+                    <span class="t-arrow">→</span><span class="nowrap">公益路口</span>迴轉
+                    <span class="t-arrow">→</span><span class="t-dest">与玥樓（步行約14分鐘）</span></span>
+                  </div>
                 </div>
-                  <div class="transport-row">
-                  <span class="transport-badge badge-car">公車</span>
-                  <span>公車 300 → 358 轉乘：至<span class="nowrap">「永春東七路口」</span>下車，30分鐘一班。公車搭乘 300 於<span class="nowrap">「秋紅谷」</span>下車 --> 轉搭乘 358 於<span class="nowrap">「公益永春東七路口」</span>下車 --> 沿<span class="nowrap">公益路</span>往<span class="nowrap">環中路</span>方向步行 --> 至<span class="nowrap">益豐路四段</span>左轉 --> <span class="nowrap">与玥樓</span>於右手邊（步行約10分鐘）。</span>
+                <div class="transport-row">
+                  <span class="transport-badge badge-car">公車轉乘</span>
+                  <div>
+                    <div style="margin-bottom:0.4rem;">300 → 358 轉乘（30分鐘一班）</div>
+                    <span>公車300 至<span class="nowrap">「秋紅谷」</span>下車
+                    <span class="t-arrow">→</span>轉搭358 至<span class="nowrap">「公益永春東七路口」</span>下車
+                    <span class="t-arrow">→</span>沿<span class="nowrap">公益路</span>往<span class="nowrap">環中路</span>步行
+                    <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>左轉
+                    <span class="t-arrow">→</span><span class="t-dest">与玥樓（步行約10分鐘）</span></span>
+                  </div>
                 </div>
                 <div class="transport-row">
                   <span class="transport-badge badge-car">叫車</span>
-                  <span>Uber / Line Taxi，搜尋<span class="nowrap">「与玥樓」</span>導航</span>
+                  <span>Uber / Line Taxi，搜尋<span class="nowrap">「与玥樓」</span>直接導航</span>
                 </div>
               </div>
             </div>
@@ -542,11 +562,25 @@
               <div class="accordion-body-inner">
                 <div class="transport-row">
                   <span class="transport-badge badge-car">高速公路</span>
-                  <span>國道一號下<span class="nowrap">南屯交流道</span> --> 往台中方向接至<span class="nowrap">五權西路</span>直行 --> 至<span class="nowrap">益豐路四段</span>左轉 --> 至<span class="nowrap">公益路二段</span>右轉 --> 与玥樓在右手邊</span>
+                  <span>國道一號下<span class="nowrap">南屯交流道</span>
+                  <span class="t-arrow">→</span>往台中方向接<span class="nowrap">五權西路</span>直行
+                  <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>左轉
+                  <span class="t-arrow">→</span><span class="nowrap">公益路二段</span>右轉
+                  <span class="t-arrow">→</span><span class="t-dest">与玥樓在右手邊</span></span>
+                </div>
+                <div class="transport-row">
                   <span class="transport-badge badge-car">快速道路</span>
-                  <span>中彰快速道路下<span class="nowrap">五權西路交流道</span> --> 公益路右轉 --> 過<span class="nowrap">益豐路四段</span> --> 与玥樓在右手邊</span>
+                  <span>中彰快速道路下<span class="nowrap">五權西路交流道</span>
+                  <span class="t-arrow">→</span><span class="nowrap">公益路</span>右轉
+                  <span class="t-arrow">→</span>過<span class="nowrap">益豐路四段</span>
+                  <span class="t-arrow">→</span><span class="t-dest">与玥樓在右手邊</span></span>
+                </div>
+                <div class="transport-row">
                   <span class="transport-badge badge-car">一般道路</span>
-                  <span>行至<span class="nowrap">公益路二段</span> --> 往<span class="nowrap">環中路</span>方向 --> 至<span class="nowrap">益豐路四段</span>迴轉 --> 与玥樓在右手邊</span>
+                  <span>行至<span class="nowrap">公益路二段</span>
+                  <span class="t-arrow">→</span>往<span class="nowrap">環中路</span>方向
+                  <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>迴轉
+                  <span class="t-arrow">→</span><span class="t-dest">与玥樓在右手邊</span></span>
                 </div>
               </div>
             </div>
@@ -590,7 +624,7 @@
               <div class="form-select-wrap">
                 <select class="form-select" id="f-attendance" required onchange="handleAttendance(this.value)">
                   <option value="">請選擇</option>
-                  <option value="全程出席（證婚 + 喜宴）">一定要全程出席！！（證婚 + 喜宴）</option>
+                  <option value="全程出席（證婚 + 喜宴）">一定全程出席！（證婚 + 喜宴）</option>
                   <option value="僅出席喜宴">僅出席喜宴</option>
                   <option value="無法出席">無法出席，敬祝新人幸福</option>
                 </select>
