@@ -111,11 +111,19 @@
   /* PHOTOS */
   #photos { background: var(--warm-white); }
   .photo-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.5rem; max-width: 720px; margin: 0 auto; }
-  .photo-slot { position: relative; border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, #f0e8dc, #e4ede9); box-shadow: var(--shadow-card); border: 1px solid var(--border-subtle); cursor: pointer; }
+  .photo-slot {
+    position: relative; border-radius: 8px; overflow: hidden;
+    background: linear-gradient(135deg, #f0e8dc, #e4ede9);
+    box-shadow: var(--shadow-soft); border: 1px solid var(--border-subtle); cursor: pointer;
+    opacity: 0; transform: scale(0.95); transition: all 1s ease-out;
+  }
+  .photo-slot.active { opacity: 1; transform: scale(1); }
   .photo-slot.tall { aspect-ratio: 3/4; }
   .photo-slot.square { aspect-ratio: 1/1; align-self: start; }
   .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-  .photo-slot:hover img { transform: scale(1.03); }
+  .photo-slot:hover img { transform: scale(1.05); }
+  .photo-grid .photo-slot:nth-child(1) { transition-delay: 0.2s; }
+  .photo-grid .photo-slot:nth-child(2) { transition-delay: 0.4s; }
   .photo-slot-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
   .ph-icon { font-size: 2rem; opacity: 0.35; }
   .ph-label { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 0.8rem; letter-spacing: 0.18em; color: var(--text-light); opacity: 0.8; }
@@ -162,6 +170,8 @@
   .accordion-trigger:hover { background: rgba(212,163,115,0.06); }
   .accordion-trigger-left { display: flex; align-items: center; gap: 0.65rem; }
   .accordion-icon-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); opacity: 0.55; flex-shrink: 0; }
+  .accordion-icon-dot--sage { background: var(--sage); }
+  .accordion-icon-dot--warm { background: #c0a080; }
   .accordion-chevron { width: 16px; height: 16px; border-right: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold); transform: rotate(45deg); transition: transform 0.3s; flex-shrink: 0; }
   .accordion-item.open .accordion-chevron { transform: rotate(-135deg); }
   .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
@@ -203,6 +213,31 @@
   .success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
   .success-title { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 0.5rem; }
   .success-text { font-size: 0.85rem; color: var(--text-light); line-height: 1.8; }
+  .error-title { color: #c0704a; }
+  .error-text { color: var(--text-mid); }
+  .ghost-btn { background: none; border: 1px solid var(--border-subtle); border-radius: 20px; padding: 0.5rem 1.2rem; font-size: 0.75rem; color: var(--text-light); cursor: pointer; letter-spacing: 0.1em; margin-top: 1.5rem; }
+  .hero-cta-btn {
+    display: inline-block; margin-top: 2rem; padding: 0.75rem 2.2rem;
+    background: rgba(212,163,115,0.18); border: 1px solid rgba(212,163,115,0.6);
+    border-radius: 40px; font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.78rem; letter-spacing: 0.22em; color: var(--text-dark);
+    text-decoration: none; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .hero-cta-btn:hover { background: rgba(212,163,115,0.32); border-color: rgba(212,163,115,0.9); }
+  .maps-btn {
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    width: 100%; padding: 0.8rem 1rem;
+    background: linear-gradient(135deg,rgba(212,163,115,0.18),rgba(141,163,153,0.12));
+    border: 1px solid rgba(212,163,115,0.4); border-radius: 12px;
+    font-size: 0.82rem; color: var(--gold); text-decoration: none;
+    letter-spacing: 0.12em; transition: background 0.25s, border-color 0.25s;
+    margin-bottom: 1.5rem; box-sizing: border-box;
+  }
+  .maps-btn:hover {
+    background: linear-gradient(135deg,rgba(212,163,115,0.3),rgba(141,163,153,0.2));
+    border-color: rgba(212,163,115,0.7);
+  }
 
   /* FOOTER */
   footer { background: var(--text-dark); color: rgba(255,255,255,0.5); text-align: center; padding: 2.5rem 1.5rem; }
@@ -228,7 +263,6 @@
     .countdown-sep { margin: 0 0.1rem; }
   }
 
-  /* Our Story Dynamic Entrance */
   .reveal-on-scroll {
     opacity: 0;
     transform: translateY(30px);
@@ -237,27 +271,6 @@
   .reveal-on-scroll.active {
     opacity: 1;
     transform: translateY(0);
-  }
-  .photo-slot {
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: var(--shadow-soft);
-    opacity: 0;
-    transform: scale(0.95);
-    transition: all 1s ease-out;
-  }
-  .photo-slot.active {
-    opacity: 1;
-    transform: scale(1);
-  }
-  .photo-slot img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-  .photo-slot:hover img {
-    transform: scale(1.05);
   }
 
 
@@ -295,10 +308,10 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo"><strong>安心相守 玄定是你</strong></div>
+  <div class="nav-logo"><strong>安心相守，玄定是你</strong></div>
   <ul class="nav-links">
     <li><a href="#photos">About</a></li>
-    <li><a href="#details">Details</a></li>
+    <li><a href="#details">Detail</a></li>
     <li><a href="#rsvp">RSVP</a></li>
   </ul>
 </nav>
@@ -318,26 +331,7 @@
     </div>
     <p class="hero-date">2026 年 11 月 14 日 (六) 午宴</p>
     <p class="hero-location">台中 · 与玥樓</p>
-    <a href="#rsvp" style="
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 0.75rem 2.2rem;
-      background: rgba(212,163,115,0.18);
-      border: 1px solid rgba(212,163,115,0.6);
-      border-radius: 40px;
-      font-family: 'Noto Sans TC', sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      color: var(--text-dark);
-      text-decoration: none;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: background 0.3s, border-color 0.3s;
-    "
-    onmouseover="this.style.background='rgba(212,163,115,0.32)';this.style.borderColor='rgba(212,163,115,0.9)'"
-    onmouseout="this.style.background='rgba(212,163,115,0.18)';this.style.borderColor='rgba(212,163,115,0.6)'">
-      出席回覆　RSVP
-    </a>
+    <a href="#rsvp" class="hero-cta-btn">出席回覆　RSVP</a>
   </div>
   <div class="scroll-hint"><span>SCROLL</span><div class="scroll-arrow"></div></div>
 </section>
@@ -385,6 +379,7 @@
         </div>
       </div>
     </div>
+    <p class="countdown-message" id="countdown-message"></p>
   </div>
 </section>
 
@@ -406,10 +401,10 @@
         十年前，我們相遇。<br>
         從青澀到成熟，從陪伴到承諾，<br>
         那些跨越距離的思念與等待，<br>
-        都慢慢成為愛情最真實的模樣。
+        都慢慢成為愛最真實的模樣。
       </p>
       <p style="margin-bottom: 1.5rem;">
-        這一路走來，<br>
+        一路走來，<br>
         我們一步一步，走向彼此的未來。
       </p>
       <p style="margin-bottom: 1.5rem;">
@@ -424,12 +419,10 @@
     </div>
 
     <div class="photo-grid">
-      <!-- 照片 1 -->
-      <div class="photo-slot tall reveal-on-scroll" style="transition-delay: 0.2s;">
+      <div class="photo-slot tall reveal-on-scroll">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/story1.jpg" alt="Our Story 1">
       </div>
-      <!-- 照片 2 -->
-      <div class="photo-slot square reveal-on-scroll" style="transition-delay: 0.4s;">
+      <div class="photo-slot square reveal-on-scroll">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/story2.jpg" alt="Our Story 2">
       </div>
     </div>
@@ -502,11 +495,7 @@
           </div>
         </div>
 
-        <!-- Google Maps 按鈕 -->
-        <a href="https://maps.google.com/?q=台中市南屯區公益路二段783號与玥樓" target="_blank" rel="noopener"
-           style="display:flex;align-items:center;justify-content:center;gap:0.6rem;width:100%;padding:0.8rem 1rem;background:linear-gradient(135deg,rgba(212,163,115,0.18),rgba(141,163,153,0.12));border:1px solid rgba(212,163,115,0.4);border-radius:12px;font-size:0.82rem;color:var(--gold);text-decoration:none;letter-spacing:0.12em;transition:all 0.25s;margin-bottom:1.5rem;box-sizing:border-box;"
-           onmouseover="this.style.background='linear-gradient(135deg,rgba(212,163,115,0.3),rgba(141,163,153,0.2))';this.style.borderColor='rgba(212,163,115,0.7)'"
-           onmouseout="this.style.background='linear-gradient(135deg,rgba(212,163,115,0.18),rgba(141,163,153,0.12))';this.style.borderColor='rgba(212,163,115,0.4)'">
+        <a href="https://maps.google.com/?q=台中市南屯區公益路二段783號与玥樓" target="_blank" rel="noopener" class="maps-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           開啟 Google Maps 導航
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
@@ -515,7 +504,7 @@
         <div class="accordion">
           <div class="accordion-item">
             <button class="accordion-trigger" onclick="toggleAccordion(this)">
-              <span class="accordion-trigger-left"><span class="accordion-icon-dot" style="background:var(--sage);"></span>🚌 大眾運輸</span>
+              <span class="accordion-trigger-left"><span class="accordion-icon-dot accordion-icon-dot--sage"></span>🚌 大眾運輸</span>
               <span class="accordion-chevron"></span>
             </button>
             <div class="accordion-body">
@@ -552,7 +541,7 @@
           </div>
           <div class="accordion-item">
             <button class="accordion-trigger" onclick="toggleAccordion(this)">
-              <span class="accordion-trigger-left"><span class="accordion-icon-dot" style="background:#c0a080;"></span>🚕 自行開車</span>
+              <span class="accordion-trigger-left"><span class="accordion-icon-dot accordion-icon-dot--warm"></span>🚕 自行開車</span>
               <span class="accordion-chevron"></span>
             </button>
             <div class="accordion-body">
@@ -621,8 +610,8 @@
               <div class="form-select-wrap">
                 <select class="form-select" id="f-attendance" required onchange="handleAttendance(this.value)">
                   <option value="">請選擇</option>
-                  <option value="全程出席（證婚 + 午宴）">一定全程出席！（證婚 + 午宴）</option>
-                  <option value="僅出席午宴">僅出席午宴</option>
+                  <option value="全程出席（證婚 + 喜宴）">一定全程出席！（證婚 + 喜宴）</option>
+                  <option value="僅出席喜宴">僅出席喜宴</option>
                   <option value="無法出席">無法出席，敬祝新人幸福</option>
                 </select>
               </div>
@@ -683,11 +672,11 @@
 
       <div class="success-message" id="error-msg" style="display:none;">
         <div class="success-icon">⚠️</div>
-        <p class="success-title" style="color:#c0704a;">送出失敗</p>
-        <p class="success-text" style="color:#6b5c50;">
+        <p class="success-title error-title">送出失敗</p>
+        <p class="success-text error-text">
           網路連線異常，回覆未能送達。<br>請聯絡我們<br><br>
         </p>
-        <button onclick="resetForm()" style="margin-top:1.5rem;background:none;border:1px solid var(--border-subtle);border-radius:20px;padding:0.5rem 1.2rem;font-size:0.75rem;color:var(--text-light);cursor:pointer;letter-spacing:0.1em;">
+        <button onclick="resetForm()" class="ghost-btn">
           ← 返回重新填寫
         </button>
       </div>
@@ -705,47 +694,55 @@
 
 
 <script>
-// ══════════════════════════════════════════════
+const CANNOT_ATTEND = '無法出席';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtdzhkD040tZPjXfz2SbM8uNmCpy6UZzkAvZfzaigK42jU0ywxsVepY8Xl2lBcc9JV/exec';
 
-// ── Countdown with flip animation ──
+// Countdown with flip animation
 (function(){
   const target = new Date('2026-11-14T10:30:00+08:00');
   const prev = {};
+  const cdEls = {
+    days:  document.getElementById('cd-days'),
+    hours: document.getElementById('cd-hours'),
+    mins:  document.getElementById('cd-mins'),
+    secs:  document.getElementById('cd-secs'),
+    msg:   document.getElementById('countdown-message'),
+  };
+  let intervalId;
 
   function pad(n, w){ return String(n).padStart(w,'0'); }
 
-  function setFlip(id, val){
-    const el = document.getElementById(id);
+  function setFlip(el, val){
     if(!el) return;
-    if(prev[id] !== val){
+    const key = el.id;
+    if(prev[key] !== val){
       el.classList.remove('flip');
       void el.offsetWidth;
       el.textContent = val;
       el.classList.add('flip');
-      prev[id] = val;
+      prev[key] = val;
     }
   }
 
   function tick(){
     const diff = target - new Date();
     if(diff <= 0){
-      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
-        document.getElementById(id).textContent = '00';
-      });
-      document.getElementById('countdown-message').textContent = '今天是我們的大日子！🎉';
+      Object.values(cdEls).forEach(el => { if(el && el !== cdEls.msg) el.textContent = '00'; });
+      if(cdEls.msg) cdEls.msg.textContent = '今天是我們的大日子！🎉';
+      clearInterval(intervalId);
       return;
     }
     const d = Math.floor(diff/86400000);
     const h = Math.floor((diff%86400000)/3600000);
     const m = Math.floor((diff%3600000)/60000);
     const s = Math.floor((diff%60000)/1000);
-    setFlip('cd-days',  pad(d,3));
-    setFlip('cd-hours', pad(h,2));
-    setFlip('cd-mins',  pad(m,2));
-    setFlip('cd-secs',  pad(s,2));
+    setFlip(cdEls.days,  pad(d,3));
+    setFlip(cdEls.hours, pad(h,2));
+    setFlip(cdEls.mins,  pad(m,2));
+    setFlip(cdEls.secs,  pad(s,2));
   }
   tick();
-  setInterval(tick, 1000);
+  intervalId = setInterval(tick, 1000);
 })();
 
 
@@ -758,58 +755,36 @@ function toggleAccordion(btn){
 }
 
 
-// ── Smart form logic ──
 function handleAttendance(val){
   const luncheonField = document.getElementById('luncheon-field');
   const smart         = document.getElementById('smart-fields');
   const msgField      = document.getElementById('message-field');
+  const isAbsent = val === CANNOT_ATTEND;
 
-  if(val === '無法出席'){
-    // 無法出席：隱藏人數、飲食、兒童椅，只顯示祝福
-    luncheonField.style.display = 'none';
-    smart.classList.remove('visible');
-    msgField.style.display = 'block';
-    document.getElementById('f-luncheon-count').value = '0';
-  } else if(val === ''){
-    // 未選：全部隱藏
-    luncheonField.style.display = 'block';
-    smart.classList.remove('visible');
-    msgField.style.display = 'none';
-    document.getElementById('f-luncheon-count').value = '';
-  } else {
-    // 有出席：顯示人數欄位，其他欄位依人數決定
-    luncheonField.style.display = 'block';
-    msgField.style.display = 'none';
-    smart.classList.remove('visible');
-    document.getElementById('f-luncheon-count').value = '';
-  }
+  luncheonField.style.display = isAbsent ? 'none' : 'block';
+  smart.classList.remove('visible');
+  msgField.style.display = isAbsent ? 'block' : 'none';
+  document.getElementById('f-luncheon-count').value = isAbsent ? '0' : '';
 }
 
 function handleLuncheonCount(val){
-  const attendance = document.getElementById('f-attendance').value;
-  if(attendance === '無法出席') return; // 無法出席時不處理
-
+  if(document.getElementById('f-attendance').value === CANNOT_ATTEND) return;
   const n = parseInt(val, 10);
   const smart    = document.getElementById('smart-fields');
   const msgField = document.getElementById('message-field');
-  if(!isNaN(n) && n > 0){
-    smart.classList.add('visible');
-    msgField.style.display = 'block';
-  } else if(!isNaN(n) && n === 0){
-    smart.classList.remove('visible');
-    msgField.style.display = 'block';
-  } else {
+  if(isNaN(n)){
     smart.classList.remove('visible');
     msgField.style.display = 'none';
+    return;
   }
+  smart.classList.toggle('visible', n > 0);
+  msgField.style.display = 'block';
 }
 
 
-// ── Form submit via fetch (no-cors) ──
 function submitForm(e){
   e.preventDefault();
 
-  // 離線時直接顯示錯誤
   if (!navigator.onLine) {
     showError();
     return;
@@ -829,7 +804,6 @@ function submitForm(e){
     message:    document.getElementById('f-message').value.trim(),
   };
 
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtdzhkD040tZPjXfz2SbM8uNmCpy6UZzkAvZfzaigK42jU0ywxsVepY8Xl2lBcc9JV/exec';
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -857,18 +831,14 @@ function resetForm(){
 </script>
 
 <script>
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-  };
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
+        observer.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
   document.querySelectorAll('.reveal-on-scroll').forEach(el => {
     observer.observe(el);
