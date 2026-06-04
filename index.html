@@ -430,28 +430,29 @@
           誠摯地邀請你們一起來見證我們的幸福。
         </p>
       </div>
-      <div id="story-en" style="display:none;font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:2;">
+      <div id="story-en" style="display:none;font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.8;max-width:500px;margin:0 auto;text-align:center;">
         <p style="margin-bottom:1.5rem;"><strong>Ten years ago, our paths crossed.</strong></p>
-        <p style="margin-bottom:1.5rem;">
-          Through every season of life, we have grown together,<br>
-          shared countless memories,<br>
-          and built a love that has led us to this moment.
+        <p>
+          Through every season of life, we have grown together, 
+          shared countless memories, and built a love that has led us to this moment.
         </p>
-        <p style="margin-bottom:1.5rem;">
-          Step by step, we have found our way to each other —<br>
+
+        <p>
+          Step by step, we have found our way to each other 
           and to our future.
         </p>
-        <p style="margin-bottom:1.5rem;">
+
+        <p style="margin:2rem 0;">
           <strong>An &amp; Hsuan</strong><br>
-          With peaceful hearts, we know we are meant to be.
+          <em>With peaceful hearts, we know we are meant to be.</em>
         </p>
+
         <p>
-          You have been an important part of our journey,<br>
-          and it would mean the world to us<br>
-          to have you with us as we celebrate<br>
+          You have been an important part of our journey,
+          and it would mean the world to us to have you with us as we celebrate
           <strong>the beginning of our next chapter.</strong>
         </p>
-      </div>
+
     </div>
 
     <div class="photo-grid">
@@ -481,7 +482,7 @@
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-dot">🌿</div>
-        <div class="timeline-text"><span class="timeline-time">10:30 AM — 賓客入場</span></div>
+        <div class="timeline-text"><span class="timeline-time">10:40 AM — 賓客入場</span></div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">💍</div>
@@ -489,11 +490,11 @@
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">🥂</div>
-        <div class="timeline-text"><span class="timeline-time">12:15 PM — 午宴入席</span></div>
+        <div class="timeline-text"><span class="timeline-time">12:00 PM — 午宴入席</span></div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">🍽️</div>
-        <div class="timeline-text"><span class="timeline-time">12:45 PM — 午宴開始</span></div>
+        <div class="timeline-text"><span class="timeline-time">12:30 PM — 午宴開始</span></div>
       </div>
     </div>
 
@@ -548,7 +549,7 @@
                 <div class="transport-row">
                   <span class="transport-badge badge-bus">高鐵轉乘</span>
                   <div>
-                    <div style="margin-bottom:0.4rem;">台中高鐵站可轉乘公車 160 或計程車前往。</div>
+                    <div style="margin-bottom:0.4rem;">台中高鐵站，可轉乘公車 160 或計程車前往。</div>
                     <span>公車160 至<span class="nowrap">「向上永春東七路口」</span>下車
                     <span class="t-arrow">→</span>對向車道左轉直走
                     <span class="t-arrow">→</span><span class="nowrap">五權西路二段</span>右轉
@@ -560,7 +561,7 @@
                 <div class="transport-row">
                   <span class="transport-badge badge-car">公車轉乘</span>
                   <div>
-                    <div style="margin-bottom:0.4rem;">300 → 358 轉乘，30分鐘一班。</div>
+                    <div style="margin-bottom:0.4rem;">公車 300 → 358 轉乘，30分鐘一班。</div>
                     <span>公車300 至<span class="nowrap">「秋紅谷」</span>下車
                     <span class="t-arrow">→</span>轉搭358 至<span class="nowrap">「公益永春東七路口」</span>下車
                     <span class="t-arrow">→</span>沿<span class="nowrap">公益路二段</span>往<span class="nowrap">環中路</span>步行
@@ -646,9 +647,9 @@
               <div class="form-select-wrap">
                 <select class="form-select" id="f-attendance" required onchange="handleAttendance(this.value)">
                   <option value="">請選擇</option>
-                  <option value="全程出席（證婚 + 喜宴）">一定全程出席！（證婚 + 喜宴）</option>
-                  <option value="僅出席喜宴">僅出席喜宴</option>
-                  <option value="無法出席">無法出席，敬祝新人幸福</option>
+                  <option value="證婚 + 喜宴">見證幸福的每一刻（證婚 + 喜宴）</option>
+                  <option value="喜宴">參與幸福饗宴（喜宴）</option>
+                  <option value="無法出席">無法親臨現場，但祝福與你們同在</option>
                 </select>
               </div>
             </div>
@@ -710,7 +711,7 @@
         <div class="success-icon">⚠️</div>
         <p class="success-title error-title">送出失敗</p>
         <p class="success-text error-text">
-          網路連線異常，回覆未能送達。<br>請聯絡我們<br><br>
+          網路連線異常 或 系統問題<br>請聯絡我們！<br><br>
         </p>
         <button onclick="resetForm()" class="ghost-btn">
           ← 返回重新填寫
@@ -735,7 +736,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtdzhkD040tZPjXfz2S
 
 // Countdown with flip animation
 (function(){
-  const target = new Date('2026-11-14T10:30:00+08:00');
+  const target = new Date('2026-11-14T00:00:00+08:00');
   const prev = {};
   const cdEls = {
     days:  document.getElementById('cd-days'),
