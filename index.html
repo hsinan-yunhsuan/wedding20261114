@@ -258,6 +258,46 @@
     .form-row { grid-template-columns: 1fr; }
     section { padding: 4rem 1rem; }
   }
+  /* ── STORY LANG TOGGLE ── */
+  #btn-zh.active-lang, #btn-en.active-lang {
+    background: var(--gold); color: white; border-color: var(--gold);
+  }
+
+  /* ── SECTION FADE-IN ON SCROLL (stagger children) ── */
+  .stagger-child {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stagger-child.active { opacity: 1; transform: translateY(0); }
+
+  /* ── TIMELINE ITEM SLIDE-IN ── */
+  .timeline-item {
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .timeline-item.active { opacity: 1; transform: translateX(0); }
+
+  /* ── V-CARD HOVER LIFT ── */
+  .v-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .v-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(140,110,80,0.18); }
+
+  /* ── RSVP CARD SHIMMER BORDER ── */
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position:  200% center; }
+  }
+
+  /* ── COUNTDOWN PULSE ── */
+  @keyframes subtlePulse {
+    0%, 100% { box-shadow: var(--shadow-card); }
+    50%       { box-shadow: 0 12px 40px rgba(212,163,115,0.25), 0 4px 12px rgba(212,163,115,0.15); }
+  }
+  .countdown-card { animation: subtlePulse 3s ease-in-out infinite; }
+  .countdown-card:nth-child(1) { animation-delay: 0s; }
+  .countdown-card:nth-child(2) { animation-delay: 0.4s; }
+  .countdown-card:nth-child(3) { animation-delay: 0.8s; }
+  .countdown-card:nth-child(4) { animation-delay: 1.2s; }
+
   @media (max-width: 400px) {
     .countdown-card { min-width: 56px; }
     .countdown-sep { margin: 0 0.1rem; }
@@ -395,27 +435,70 @@
       <div class="ornamental-divider-line right"></div>
     </div>
 
+    <!-- 語言切換按鈕 -->
+    <div class="reveal-on-scroll" style="display:flex;justify-content:center;gap:0.5rem;margin-bottom:2rem;">
+      <button id="btn-zh" onclick="switchLang('zh')"
+        style="padding:0.4rem 1.2rem;border-radius:30px;border:1px solid var(--gold);background:var(--gold);color:white;font-family:'Noto Sans TC',sans-serif;font-size:0.72rem;letter-spacing:0.15em;cursor:pointer;transition:all 0.25s;">
+        中文
+      </button>
+      <button id="btn-en" onclick="switchLang('en')"
+        style="padding:0.4rem 1.2rem;border-radius:30px;border:1px solid var(--border-subtle);background:transparent;color:var(--text-mid);font-family:'Noto Sans TC',sans-serif;font-size:0.72rem;letter-spacing:0.15em;cursor:pointer;transition:all 0.25s;">
+        English
+      </button>
+    </div>
+
     <!-- 文字故事區 -->
-    <div class="story-content reveal-on-scroll" style="max-width: 650px; margin: 0 auto 3.5rem; text-align: center; line-height: 2.2; color: var(--text-mid); font-family: 'Noto Sans TC', sans-serif; letter-spacing: 0.05em;">
-      <p style="margin-bottom: 1.5rem;">
-        十年前，我們相遇。<br>
-        從青澀到成熟，從陪伴到承諾，<br>
-        那些跨越距離的思念與等待，<br>
-        都慢慢成為愛最真實的模樣。
-      </p>
-      <p style="margin-bottom: 1.5rem;">
-        一路走來，<br>
-        我們一步一步，走向彼此的未來。
-      </p>
-      <p style="margin-bottom: 1.5rem;">
-        於是我們決定 —— <br>
-        <strong>安心相守，玄定是你。</strong>
-      </p>
-      <p>
-        你們，<br>
-        都是我們生命中重要的人，<br>
-        誠摯地邀請你們一起來見證我們的幸福。
-      </p>
+    <div class="story-content reveal-on-scroll" style="max-width:650px;margin:0 auto 3.5rem;text-align:center;line-height:2.2;color:var(--text-mid);font-family:'Noto Sans TC',sans-serif;letter-spacing:0.05em;">
+
+      <!-- 中文 -->
+      <div id="story-zh" style="transition:opacity 0.4s ease;">
+        <p style="margin-bottom:1.5rem;">
+          十年前，我們相遇。<br>
+          從青澀到成熟，從陪伴到承諾，<br>
+          那些跨越距離的思念與等待，<br>
+          都慢慢成為愛最真實的模樣。
+        </p>
+        <p style="margin-bottom:1.5rem;">
+          一路走來，<br>
+          我們一步一步，走向彼此的未來。
+        </p>
+        <p style="margin-bottom:1.5rem;">
+          於是我們決定 ——<br>
+          <strong>安心相守，玄定是你。</strong>
+        </p>
+        <p>
+          你們，<br>
+          都是我們生命中重要的人，<br>
+          誠摯地邀請你們一起來見證我們的幸福。
+        </p>
+      </div>
+
+      <!-- English -->
+      <div id="story-en" style="display:none;transition:opacity 0.4s ease;font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:2;">
+        <p style="margin-bottom:1.5rem;">
+          <strong>Ten years ago, our paths crossed.</strong>
+        </p>
+        <p style="margin-bottom:1.5rem;">
+          Through every season of life, we have grown together,<br>
+          shared countless memories,<br>
+          and built a love that has led us to this moment.
+        </p>
+        <p style="margin-bottom:1.5rem;">
+          Step by step, we have found our way to each other —<br>
+          and to our future.
+        </p>
+        <p style="margin-bottom:1.5rem;">
+          <strong>An &amp; Hsuan</strong><br>
+          With peaceful hearts, we know we are meant to be.
+        </p>
+        <p>
+          You have been an important part of our journey,<br>
+          and it would mean the world to us<br>
+          to have you with us as we celebrate<br>
+          <strong>the beginning of our next chapter.</strong>
+        </p>
+      </div>
+
     </div>
 
     <div class="photo-grid">
@@ -433,8 +516,8 @@
 <!-- DETAILS + TIMELINE -->
 <section id="details">
   <div class="section-inner">
-    <p class="section-label">Wedding Details</p>
-    <h2 class="section-title">婚禮詳情</h2>
+    <p class="section-label stagger-child">Wedding Details</p>
+    <h2 class="section-title stagger-child">婚禮詳情</h2>
     <div class="ornamental-divider">
       <div class="ornamental-divider-line"></div>
       <span>✦</span>
