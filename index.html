@@ -30,6 +30,11 @@
     backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
     background: rgba(253,248,242,0.75); border-bottom: 1px solid var(--border-subtle);
     padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between;
+    animation: navSlideDown 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+  }
+  @keyframes navSlideDown {
+    from { opacity: 0; transform: translateY(-100%); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   .nav-logo { font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 300; font-size: 1.25rem; color: var(--gold); letter-spacing: 0.08em; white-space: nowrap; }
   .nav-links { display: flex; gap: 0.25rem; list-style: none; }
@@ -67,7 +72,38 @@
     background-size: 500px 500px; background-position: center; background-repeat: no-repeat;
     pointer-events: none;
   }
-  .hero-content { position: relative; z-index: 3; text-align: center; animation: fadeUp 1.4s ease forwards; padding: 0 1.5rem; }
+  .hero-content { position: relative; z-index: 3; text-align: center; padding: 0 1.5rem; }
+
+  /* Hero staggered entrance */
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heroFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .hero-eyebrow {
+    animation: heroFadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+  }
+  .hero-names {
+    animation: heroFadeUp 1.1s cubic-bezier(0.22,1,0.36,1) 0.55s both;
+  }
+  .hero-names-en {
+    animation: heroFadeUp 1s cubic-bezier(0.22,1,0.36,1) 0.75s both;
+  }
+  .hero-divider {
+    animation: heroFadeIn 0.9s ease 1s both;
+  }
+  .hero-date {
+    animation: heroFadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 1.1s both;
+  }
+  .hero-location {
+    animation: heroFadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 1.22s both;
+  }
+  .hero-cta-btn {
+    animation: heroFadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 1.4s both;
+  }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
   .hero-eyebrow { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 1rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 1.5rem; opacity: 0.85; }
   .hero-names { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1.05; color: var(--text-dark); letter-spacing: 0.04em; margin-bottom: 0.5rem; text-shadow: 0 2px 20px rgba(253,248,242,0.6); }
@@ -78,7 +114,8 @@
   .hero-divider-ornament { font-size: 1.1rem; color: var(--gold); opacity: 0.7; }
   .hero-date { font-family: 'Noto Sans TC', sans-serif; font-size: 1rem; letter-spacing: 0.25em; color: var(--text-mid); margin-bottom: 0.5rem; }
   .hero-location { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 1.2rem; color: var(--sage); letter-spacing: 0.1em; }
-  .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-light); font-size: 0.7rem; letter-spacing: 0.2em; animation: bounce 2.5s ease-in-out infinite; z-index: 3; }
+  .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-light); font-size: 0.7rem; letter-spacing: 0.2em; z-index: 3; animation: scrollHintAppear 1s ease 2s both, bounce 2.5s ease-in-out 3s infinite; }
+  @keyframes scrollHintAppear { from { opacity: 0; } to { opacity: 1; } }
   @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
   .scroll-arrow { width: 24px; height: 24px; border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold); transform: rotate(45deg); opacity: 0.5; }
 
@@ -97,6 +134,13 @@
   #countdown-section { background: linear-gradient(160deg, #f0ebe1 0%, #e8f0ed 50%, #ece5dc 100%); }
   .countdown-wrapper { display: flex; justify-content: center; align-items: center; flex-wrap: nowrap; }
   .countdown-unit { display: flex; align-items: center; }
+
+  /* Countdown cards stagger */
+  .countdown-unit {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+  }
   .countdown-card { background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.98); border-radius: 14px; box-shadow: var(--shadow-card); padding: 1rem 1rem 0.9rem; min-width: 82px; text-align: center; position: relative; overflow: hidden; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
   .countdown-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 60%); pointer-events: none; }
   .countdown-number { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 2.2rem; line-height: 1; color: var(--text-dark); letter-spacing: -0.02em; position: relative; z-index: 1; display: block; }
@@ -115,15 +159,12 @@
     position: relative; border-radius: 8px; overflow: hidden;
     background: linear-gradient(135deg, #f0e8dc, #e4ede9);
     box-shadow: var(--shadow-soft); border: 1px solid var(--border-subtle); cursor: pointer;
-    opacity: 0; transform: scale(0.95); transition: all 1s ease-out;
   }
   .photo-slot.active { opacity: 1; transform: scale(1); }
   .photo-slot.tall { aspect-ratio: 3/4; }
   .photo-slot.square { aspect-ratio: 1/1; align-self: start; }
-  .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+  .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.22,1,0.36,1); }
   .photo-slot:hover img { transform: scale(1.05); }
-  .photo-grid .photo-slot:nth-child(1) { transition-delay: 0.2s; }
-  .photo-grid .photo-slot:nth-child(2) { transition-delay: 0.4s; }
   .photo-slot-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
   .ph-icon { font-size: 2rem; opacity: 0.35; }
   .ph-label { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 0.8rem; letter-spacing: 0.18em; color: var(--text-light); opacity: 0.8; }
@@ -140,7 +181,15 @@
     gap: 0.75rem;
     margin-bottom: 1.75rem;
     text-align: left;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
   }
+  .timeline-item.active { opacity: 1; transform: translateX(0); }
+  .timeline-item:nth-child(1) { transition-delay: 0s; }
+  .timeline-item:nth-child(2) { transition-delay: 0.12s; }
+  .timeline-item:nth-child(3) { transition-delay: 0.24s; }
+  .timeline-item:nth-child(4) { transition-delay: 0.36s; }
   .timeline-item:last-child { margin-bottom: 0; }
   .timeline-dot {
     width: 22px; height: 22px; border-radius: 50%;
@@ -152,7 +201,8 @@
   .timeline-text { }
   .timeline-time { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 0.82rem; letter-spacing: 0.15em; color: var(--gold); display: block; }
 
-  .location-card { background: white; border: 1px solid var(--border-subtle); border-radius: 20px; overflow: hidden; max-width: 560px; margin: 3rem auto 0; box-shadow: var(--shadow-soft); }
+  .location-card { background: white; border: 1px solid var(--border-subtle); border-radius: 20px; overflow: hidden; max-width: 560px; margin: 3rem auto 0; box-shadow: var(--shadow-soft); opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); transition-delay: 0.15s; }
+  .location-card.active { opacity: 1; transform: translateY(0); }
   .location-card-header { background: linear-gradient(135deg, #8b7355, #b09070); padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; color: white; text-align: left; }
   .lch-title { font-family: 'Montserrat', sans-serif; font-size: 1.15rem; letter-spacing: 0.1em; }
   .lch-sub { font-size: 0.7rem; letter-spacing: 0.15em; opacity: 0.85; font-family: 'Montserrat', sans-serif; font-style: italic; }
@@ -188,7 +238,8 @@
 
   /* RSVP */
   #rsvp { background: linear-gradient(160deg, #ede8e0 0%, #e2ebe8 60%, #ece5dc 100%); }
-  .rsvp-card { background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.92); border-radius: 24px; padding: 3rem 2.5rem; box-shadow: var(--shadow-card); max-width: 640px; margin: 0 auto; }
+  .rsvp-card { background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.92); border-radius: 24px; padding: 3rem 2.5rem; box-shadow: var(--shadow-card); max-width: 640px; margin: 0 auto; opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1); transition-delay: 0.1s; }
+  .rsvp-card.active { opacity: 1; transform: translateY(0); }
   .setup-notice { background: rgba(212,163,115,0.08); border: 1px dashed rgba(212,163,115,0.45); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; font-size: 0.78rem; color: var(--text-mid); line-height: 2; letter-spacing: 0.04em; }
   .setup-notice strong { color: #b8813a; font-weight: 600; }
   .setup-notice code { background: rgba(212,163,115,0.18); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.76rem; color: var(--text-dark); font-family: monospace; }
@@ -239,6 +290,26 @@
     border-color: rgba(212,163,115,0.7);
   }
 
+  /* STORY PHOTOS ENTRANCE */
+  .story-photo-grid {
+    margin-top: 3.5rem;
+  }
+  .story-photo-enter {
+    opacity: 0;
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .story-photo-enter--left {
+    transform: translateX(-40px) scale(0.96);
+  }
+  .story-photo-enter--right {
+    transform: translateX(40px) scale(0.96);
+    transition-delay: 0.2s;
+  }
+  .story-photo-enter.photo-visible {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
   /* FOOTER */
   footer { background: var(--text-dark); color: rgba(255,255,255,0.5); text-align: center; padding: 2.5rem 1.5rem; }
   .footer-names { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 1.4rem; color: var(--gold-light); letter-spacing: 0.12em; margin-bottom: 0.5rem; opacity: 0.85; }
@@ -265,13 +336,34 @@
 
   .reveal-on-scroll {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .reveal-on-scroll.active {
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* Stagger delays for reveal-on-scroll siblings */
+  .reveal-on-scroll[data-delay="1"] { transition-delay: 0.1s; }
+  .reveal-on-scroll[data-delay="2"] { transition-delay: 0.22s; }
+  .reveal-on-scroll[data-delay="3"] { transition-delay: 0.34s; }
+  .reveal-on-scroll[data-delay="4"] { transition-delay: 0.46s; }
+  .reveal-on-scroll[data-delay="5"] { transition-delay: 0.58s; }
+
+  .countdown-unit.active { opacity: 1; transform: translateY(0) scale(1); }
+  .countdown-unit:nth-child(1) { transition-delay: 0s; }
+  .countdown-unit:nth-child(2) { transition-delay: 0.1s; }
+  .countdown-unit:nth-child(3) { transition-delay: 0.2s; }
+  .countdown-unit:nth-child(4) { transition-delay: 0.3s; }
+  .countdown-unit:nth-child(5) { transition-delay: 0.4s; }
+  .countdown-unit:nth-child(6) { transition-delay: 0.5s; }
+  .countdown-unit:nth-child(7) { transition-delay: 0.6s; }
+  .countdown-sep {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .countdown-sep.active { opacity: 0.35; }
 
 
   #details .section-inner {
@@ -323,7 +415,7 @@
     <h1 class="hero-names">
       <span>信安</span><span class="ampersand">&amp;</span><span>韻玄</span>
     </h1>
-    <p style="font-family:'Montserrat',sans-serif;font-style:italic;color:var(--gold);font-size:1.15rem;letter-spacing:0.18em;margin-bottom:0.5rem;">Hsin An &amp; Yun Hsuan</p>
+    <p class="hero-names-en" style="font-family:'Montserrat',sans-serif;font-style:italic;color:var(--gold);font-size:1.15rem;letter-spacing:0.18em;margin-bottom:0.5rem;">Hsin An &amp; Yun Hsuan</p>
     <div class="hero-divider">
       <div class="hero-divider-line"></div>
       <div class="hero-divider-ornament">✦</div>
@@ -387,16 +479,16 @@
 <!-- PHOTOS: 我們的故事 -->
 <section id="photos">
   <div class="section-inner">
-    <p class="section-label reveal-on-scroll">Our Story</p>
-    <h2 class="section-title reveal-on-scroll">我們的故事</h2>
-    <div class="ornamental-divider reveal-on-scroll">
+    <p class="section-label reveal-on-scroll" data-delay="1">Our Story</p>
+    <h2 class="section-title reveal-on-scroll" data-delay="2">我們的故事</h2>
+    <div class="ornamental-divider reveal-on-scroll" data-delay="3">
       <div class="ornamental-divider-line"></div>
       <span>✦</span>
       <div class="ornamental-divider-line right"></div>
     </div>
 
     <!-- 語言切換 -->
-    <div class="reveal-on-scroll" style="display:flex;justify-content:center;gap:0.5rem;margin-bottom:2rem;">
+    <div class="reveal-on-scroll" data-delay="4" style="display:flex;justify-content:center;gap:0.5rem;margin-bottom:2rem;">
       <button id="btn-zh" onclick="switchLang('zh')"
         style="padding:0.4rem 1.2rem;border-radius:30px;border:1px solid var(--gold);background:var(--gold);color:white;font-family:'Noto Sans TC',sans-serif;font-size:0.72rem;letter-spacing:0.15em;cursor:pointer;transition:all 0.25s;">
         中文
@@ -408,7 +500,7 @@
     </div>
 
     <!-- 文字故事區 -->
-    <div class="story-content reveal-on-scroll" style="max-width:650px;margin:0 auto 3.5rem;text-align:center;line-height:2.2;color:var(--text-mid);">
+    <div class="story-content reveal-on-scroll" data-delay="5" style="max-width:650px;margin:0 auto 3.5rem;text-align:center;line-height:2.2;color:var(--text-mid);">
       <div id="story-zh">
         <p style="margin-bottom:1.5rem;">
           十年前，我們相遇。<br>
@@ -417,8 +509,9 @@
           都慢慢成為愛最真實的模樣。
         </p>
         <p style="margin-bottom:1.5rem;">
-          一路走來，<br>
-          我們一步一步，走向彼此的未來。
+          十年的時光裡，<br>
+          我們用不同的步伐前進，<br>
+          卻總能在彼此身上找到最剛好的默契與依靠。
         </p>
         <p style="margin-bottom:1.5rem;">
           於是我們決定 ——<br>
@@ -431,20 +524,19 @@
         </p>
       </div>
       <div id="story-en" style="display:none;font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.8;max-width:500px;margin:0 auto;text-align:center;">
-        <p style="margin-bottom:1.5rem;"><strong>Ten years ago, our paths crossed.</strong></p>
+        <p style="margin-bottom:1.5rem;"><strong>Ten years ago, our story began.</strong></p>
         <p>
-          Through every season of life, we have grown together, 
-          shared countless memories, and built a love that has led us to this moment.
+          Through every season of life, we have grown together — 
+          from youthful dreams to a deeper understanding of love, 
+          from simply being by each other's side to choosing a lifetime together.
         </p>
-
-        <p>
-          Step by step, we have found our way to each other 
-          and to our future.
+        <p style="margin-bottom:1.5rem;">
+          Across miles and moments, we have walked at our own pace, yet always found comfort, strength, and understanding in one another.
         </p>
 
         <p style="margin:2rem 0;">
-          <strong>An &amp; Hsuan</strong><br>
-          <em>With peaceful hearts, we know we are meant to be.</em>
+          And now, <strong>An &amp; Hsuan</strong><br>
+          <em>With hearts at peace, we know we have found our forever.</em>
         </p>
 
         <p>
@@ -455,11 +547,11 @@
 
     </div>
 
-    <div class="photo-grid">
-      <div class="photo-slot tall reveal-on-scroll">
+    <div class="photo-grid story-photo-grid">
+      <div class="photo-slot tall story-photo-enter story-photo-enter--left">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/story1.jpg" alt="Our Story 1">
       </div>
-      <div class="photo-slot square reveal-on-scroll">
+      <div class="photo-slot square story-photo-enter story-photo-enter--right">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/story2.jpg" alt="Our Story 2">
       </div>
     </div>
@@ -470,14 +562,14 @@
 <!-- DETAILS + TIMELINE -->
 <section id="details">
   <div class="section-inner">
-    <p class="section-label">Wedding Details</p>
-    <h2 class="section-title">婚禮詳情</h2>
-    <div class="ornamental-divider">
+    <p class="section-label reveal-on-scroll" data-delay="1">Wedding Details</p>
+    <h2 class="section-title reveal-on-scroll" data-delay="2">婚禮詳情</h2>
+    <div class="ornamental-divider reveal-on-scroll" data-delay="3">
       <div class="ornamental-divider-line"></div>
       <span>✦</span>
       <div class="ornamental-divider-line right"></div>
     </div>
-    <p style="text-align:center;font-family:'Noto Serif TC',serif;font-size:0.82rem;color:var(--text-light);letter-spacing:0.15em;margin-bottom:2.75rem;">2026 年 11 月 14 日 (六) · 流程</p>
+    <p class="reveal-on-scroll" data-delay="4" style="text-align:center;font-family:'Noto Serif TC',serif;font-size:0.82rem;color:var(--text-light);letter-spacing:0.15em;margin-bottom:2.75rem;">2026 年 11 月 14 日 (六) · 流程</p>
 
     <div class="timeline">
       <div class="timeline-item">
@@ -617,8 +709,8 @@
 <!-- RSVP -->
 <section id="rsvp">
   <div class="section-inner">
-    <p class="section-label">RSVP</p>
-    <h2 class="section-title">出席回覆</h2>
+    <p class="section-label reveal-on-scroll" data-delay="1">RSVP</p>
+    <h2 class="section-title reveal-on-scroll" data-delay="2">出席回覆</h2>
     <div class="rsvp-card">
 
       <div id="form-area">
@@ -885,18 +977,69 @@ function resetForm(){
 </script>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
+  // ── Universal scroll-reveal observer ──
+  const revealObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
-        observer.unobserve(entry.target);
+        revealObs.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
 
-  document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-    observer.observe(el);
-  });
+  document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObs.observe(el));
+
+  // ── Countdown cards stagger ──
+  const countdownObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.countdown-unit, .countdown-sep').forEach(el => {
+          el.classList.add('active');
+        });
+        countdownObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  const cdWrapper = document.querySelector('.countdown-wrapper');
+  if (cdWrapper) countdownObs.observe(cdWrapper);
+
+  // ── Timeline items stagger ──
+  const timelineObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.timeline-item').forEach(el => el.classList.add('active'));
+        timelineObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  const timeline = document.querySelector('.timeline');
+  if (timeline) timelineObs.observe(timeline);
+
+  // ── Location card ──
+  const cardObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        cardObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
+
+  document.querySelectorAll('.location-card, .rsvp-card').forEach(el => cardObs.observe(el));
+
+  // ── Story photos entrance ──
+  const photoObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('photo-visible');
+        photoObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -50px 0px" });
+
+  document.querySelectorAll('.story-photo-enter').forEach(el => photoObs.observe(el));
 </script>
 
 </body>
