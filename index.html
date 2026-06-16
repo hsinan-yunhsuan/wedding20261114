@@ -1215,7 +1215,7 @@
 
 <script>
 const CANNOT_ATTEND = '無法出席';
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby4udDKXCon6Es7Mb8c4qikGlokbnDAqXTVaCBHL7mH0y-Z0Zd-ed26KufYBXZsZWnc/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxtdzhkD040tZPjXfz2SbM8uNmCpy6UZzkAvZfzaigK42jU0ywxsVepY8Xl2lBcc9JV/exec';
 
 // Countdown with flip animation
 (function(){
@@ -1339,42 +1339,19 @@ function submitForm(e){
     message:    document.getElementById('f-message').value.trim(),
   };
 
-  const callbackName = 'rsvpCallback_' + Date.now();
-  const params = new URLSearchParams({ ...body, callback: callbackName });
-  const script = document.createElement('script');
-
-  const cleanup = function() {
-    if (document.body.contains(script)) document.body.removeChild(script);
-    delete window[callbackName];
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify(body),
+  }).then(() => {
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+  }).catch(() => {
+    showError();
+  }).finally(() => {
     btn.disabled = false;
     btn.textContent = '送出回覆　SUBMIT RSVP';
-  };
-
-  // 10 秒 timeout 保護
-  const timer = setTimeout(function() {
-    cleanup();
-    showError();
-  }, 10000);
-
-  window[callbackName] = function(data) {
-    clearTimeout(timer);
-    cleanup();
-    if (data && data.result === 'success') {
-      document.getElementById('form-area').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-    } else {
-      showError();
-    }
-  };
-
-  script.onerror = function() {
-    clearTimeout(timer);
-    cleanup();
-    showError();
-  };
-
-  script.src = SCRIPT_URL + '?' + params.toString();
-  document.body.appendChild(script);
+  });
 }
 
 function showError(){
