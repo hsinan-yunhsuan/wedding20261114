@@ -965,7 +965,7 @@
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-dot">🌿</div>
-        <div class="timeline-text"><span class="timeline-time">10:40 AM — 賓客入場</span></div>
+        <div class="timeline-text"><span class="timeline-time">10:40 AM — 證婚入場</span></div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">💍</div>
@@ -977,7 +977,7 @@
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">🍽️</div>
-        <div class="timeline-text"><span class="timeline-time">12:30 PM — 午宴開始</span></div>
+        <div class="timeline-text"><span class="timeline-time">12:30 PM — 午宴開席</span></div>
       </div>
     </div>
 
@@ -1339,19 +1339,42 @@ function submitForm(e){
     message:    document.getElementById('f-message').value.trim(),
   };
 
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: JSON.stringify(body),
-  }).then(() => {
-    document.getElementById('form-area').style.display = 'none';
-    document.getElementById('success-msg').style.display = 'block';
-  }).catch(() => {
-    showError();
-  }).finally(() => {
+  const callbackName = 'rsvpCallback_' + Date.now();
+  const params = new URLSearchParams({ ...body, callback: callbackName });
+  const script = document.createElement('script');
+
+  const cleanup = function() {
+    if (document.body.contains(script)) document.body.removeChild(script);
+    delete window[callbackName];
     btn.disabled = false;
     btn.textContent = '送出回覆　SUBMIT RSVP';
-  });
+  };
+
+  // 10 秒 timeout 保護
+  const timer = setTimeout(function() {
+    cleanup();
+    showError();
+  }, 10000);
+
+  window[callbackName] = function(data) {
+    clearTimeout(timer);
+    cleanup();
+    if (data && data.result === 'success') {
+      document.getElementById('form-area').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      showError();
+    }
+  };
+
+  script.onerror = function() {
+    clearTimeout(timer);
+    cleanup();
+    showError();
+  };
+
+  script.src = SCRIPT_URL + '?' + params.toString();
+  document.body.appendChild(script);
 }
 
 function showError(){
