@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>婚禮邀請函 · Wedding Invitation</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
     --gold: #d4a373;
@@ -613,8 +613,8 @@
   .story-en-inner {
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.18rem;
-    font-weight: 300;
-    color: var(--text-mid);
+    font-weight: 400;
+    color: var(--text-dark);
     line-height: 1.95;
     letter-spacing: 0.02em;
     text-align: center;
@@ -622,10 +622,11 @@
   .story-en-inner p { margin-bottom: 1.5rem; }
   .story-en-inner p:last-child { margin-bottom: 0; }
   .story-en-inner strong {
-    font-weight: 400;
+    font-weight: 600;
     color: var(--text-dark);
   }
   .story-en-inner em {
+    font-weight: 500;
     font-style: italic;
     color: var(--gold);
     opacity: 0.9;
@@ -644,14 +645,15 @@
     text-align: center;
   }
 
-  /* Photo layout */
+  /* Photo layout — overlapping 3-photo Polaroid stack */
   .story-photos-wrapper {
-    max-width: 740px;
+    position: relative;
+    max-width: 620px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 48px 1fr;
-    gap: 0;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 1.5rem 0 2.25rem;
   }
   .story-photo-frame {
     position: relative;
@@ -659,112 +661,117 @@
     overflow: hidden;
     box-shadow: 0 16px 48px rgba(120,90,60,0.18), 0 4px 12px rgba(120,90,60,0.1);
     border: 1px solid rgba(255,255,255,0.9);
+    background: var(--warm-white);
+    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.6s, width 0.6s cubic-bezier(0.22,1,0.36,1), margin-left 0.6s cubic-bezier(0.22,1,0.36,1), margin-right 0.6s cubic-bezier(0.22,1,0.36,1);
+    cursor: pointer;
   }
   .story-photo-frame img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
   }
   .story-photo-frame:hover img { transform: scale(1.04); }
 
-  /* Offset the two photos slightly */
+  /* Three-photo overlap: left + right tuck behind the larger centre photo */
   .story-photo-frame--left {
+    width: 30%;
     aspect-ratio: 3/4;
-    transform: rotate(-1.2deg) translateY(-12px);
-    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.6s;
+    margin-right: -9%;
+    transform: rotate(-9deg) translateY(10px);
+    z-index: 1;
   }
-  .story-photo-frame--left:hover {
-    transform: rotate(-0.5deg) translateY(-16px);
-    box-shadow: 0 24px 60px rgba(120,90,60,0.22), 0 6px 16px rgba(120,90,60,0.12);
+  .story-photo-frame--center {
+    width: 42%;
+    aspect-ratio: 3/4;
+    transform: rotate(0deg) translateY(-14px);
+    z-index: 3;
   }
   .story-photo-frame--right {
+    width: 30%;
     aspect-ratio: 3/4;
-    transform: rotate(1.2deg) translateY(12px);
-    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.6s;
+    margin-left: -9%;
+    transform: rotate(9deg) translateY(10px);
+    z-index: 2;
+  }
+  .story-photo-frame--left:hover {
+    transform: rotate(-6deg) translateY(4px);
+    box-shadow: 0 24px 60px rgba(120,90,60,0.22), 0 6px 16px rgba(120,90,60,0.12);
+    z-index: 4;
+  }
+  .story-photo-frame--center:hover {
+    transform: rotate(0deg) translateY(-20px);
+    box-shadow: 0 24px 60px rgba(120,90,60,0.22), 0 6px 16px rgba(120,90,60,0.12);
   }
   .story-photo-frame--right:hover {
-    transform: rotate(0.5deg) translateY(16px);
+    transform: rotate(6deg) translateY(4px);
     box-shadow: 0 24px 60px rgba(120,90,60,0.22), 0 6px 16px rgba(120,90,60,0.12);
+    z-index: 4;
   }
 
   /* Photo caption tag */
   .story-photo-tag {
     position: absolute;
-    bottom: 12px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(255,255,255,0.88);
     backdrop-filter: blur(8px);
     border-radius: 20px;
-    padding: 0.25rem 0.85rem;
+    padding: 0.2rem 0.7rem;
     font-family: 'Montserrat', sans-serif;
     font-style: italic;
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
     color: var(--text-mid);
     white-space: nowrap;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     border: 1px solid rgba(255,255,255,0.9);
   }
 
-  /* Centre ornament between photos */
-  .story-photos-ornament {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 0;
-  }
-  .story-photos-ornament-line {
-    width: 1px;
-    flex: 1;
-    min-height: 40px;
-    background: linear-gradient(to bottom, transparent, rgba(212,163,115,0.3), transparent);
-  }
-  .story-photos-ornament-gem {
-    font-size: 0.75rem;
-    color: var(--gold);
-    opacity: 0.55;
-  }
-
   /* Photo entrance animations */
-  .story-photo-frame.photo-visible {
-    opacity: 1 !important;
-    transform: rotate(-1.2deg) translateY(-12px) !important;
-  }
-  .story-photo-frame--right.photo-visible {
-    transform: rotate(1.2deg) translateY(12px) !important;
+  .story-photo-frame.photo-visible { opacity: 1 !important; }
+  .story-photo-frame--left.photo-visible    { transform: rotate(-9deg) translateY(10px) !important; }
+  .story-photo-frame--center.photo-visible  { transform: rotate(0deg) translateY(-14px) !important; }
+  .story-photo-frame--right.photo-visible   { transform: rotate(9deg) translateY(10px) !important; }
+
+  /* Tap / click swaps a side photo with the centre one — the frame's
+     role class changes, so width / margin / rotation all animate together */
+  .story-photo-frame--left,
+  .story-photo-frame--right { cursor: pointer; }
+  .story-photo-frame--center { cursor: default; }
+  .story-photo-frame img {
+    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
   }
 
+  /* Mobile: shrink the stack but increase the overlap so the centre photo
+     reads clearly and the side photos don't crowd a narrow viewport */
   @media (max-width: 640px) {
     .story-photos-wrapper {
-      grid-template-columns: 1fr;
       max-width: 300px;
-      gap: 2.5rem;
+      padding: 1.25rem 0 2rem;
     }
-    .story-photo-frame--left,
+    .story-photo-frame--left {
+      width: 26%;
+      margin-right: -12%;
+      transform: rotate(-11deg) translateY(14px);
+    }
+    .story-photo-frame--center {
+      width: 48%;
+      transform: rotate(0deg) translateY(-16px);
+    }
     .story-photo-frame--right {
-      transform: none;
+      width: 26%;
+      margin-left: -12%;
+      transform: rotate(11deg) translateY(14px);
     }
-    .story-photo-frame--left:hover,
-    .story-photo-frame--right:hover {
-      transform: none;
-    }
-    .story-photo-frame.photo-visible,
-    .story-photo-frame--right.photo-visible {
-      transform: none !important;
-    }
-    .story-photos-ornament {
-      flex-direction: row;
-    }
-    .story-photos-ornament-line {
-      width: auto;
-      height: 1px;
-      flex: 1;
-      min-height: unset;
-      background: linear-gradient(to right, transparent, rgba(212,163,115,0.3), transparent);
+    .story-photo-frame--left.photo-visible  { transform: rotate(-11deg) translateY(14px) !important; }
+    .story-photo-frame--center.photo-visible{ transform: rotate(0deg) translateY(-16px) !important; }
+    .story-photo-frame--right.photo-visible { transform: rotate(11deg) translateY(14px) !important; }
+    .story-photo-tag {
+      font-size: 0.5rem;
+      padding: 0.15rem 0.55rem;
+      bottom: 7px;
     }
     .story-quote-mark {
       font-size: 5rem;
@@ -920,7 +927,7 @@
             <em>With hearts at peace, we know we have found our forever.</em>
           </p>
         </div>
-        <div class="story-closing" style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;">
+        <div class="story-closing" style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;font-weight:500;color:var(--text-mid);">
           You have been an important part of our journey,
           and it would mean the world to us to have you with us
           as we celebrate <strong style="font-style:normal;font-weight:400;color:var(--text-dark);">the beginning of our next chapter.</strong>
@@ -928,17 +935,16 @@
       </div>
     </div>
 
-    <!-- 照片組 -->
+    <!-- 照片組：三張重疊堆放，中間為主照 -->
     <div class="story-photos-wrapper">
       <div class="story-photo-frame story-photo-frame--left story-photo-enter story-photo-enter--left">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0147.jpg" alt="信安 & 韻玄">
         <span class="story-photo-tag">信安 &amp; 韻玄</span>
       </div>
 
-      <div class="story-photos-ornament story-photo-enter" style="transition-delay:0.15s;">
-        <div class="story-photos-ornament-line"></div>
-        <span class="story-photos-ornament-gem">✦</span>
-        <div class="story-photos-ornament-line"></div>
+      <div class="story-photo-frame story-photo-frame--center story-photo-enter" style="transition-delay:0.1s;">
+        <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0147.jpg" alt="信安 & 韻玄">
+        <span class="story-photo-tag">Welcome</span>
       </div>
 
       <div class="story-photo-frame story-photo-frame--right story-photo-enter story-photo-enter--right">
@@ -1452,7 +1458,54 @@ function resetForm(){
   }, { threshold: 0.12, rootMargin: "0px 0px -50px 0px" });
 
   document.querySelectorAll('.story-photo-enter').forEach(el => photoObs.observe(el));
+
+  // ── Story photos: click a side photo to physically swap places with the
+  //    centre one — its role class changes, so position, size and rotation
+  //    all transition together (the photo itself moves, not just its content) ──
+  const STORY_ROLES = ['left', 'center', 'right'];
+
+  function getStoryRole(frame) {
+    return STORY_ROLES.find(r => frame.classList.contains('story-photo-frame--' + r));
+  }
+  function setStoryRole(frame, role) {
+    STORY_ROLES.forEach(r => frame.classList.remove('story-photo-frame--' + r));
+    frame.classList.add('story-photo-frame--' + role);
+  }
+  function swapStoryRoles(sideFrame, centerFrame) {
+    if (sideFrame.dataset.swapping === '1' || centerFrame.dataset.swapping === '1') return;
+    const sideRole = getStoryRole(sideFrame);
+    if (!sideRole || sideRole === 'center') return;
+
+    sideFrame.dataset.swapping = '1';
+    centerFrame.dataset.swapping = '1';
+
+    // Lift both above the untouched third photo while they travel
+    sideFrame.style.zIndex = '5';
+    centerFrame.style.zIndex = '4';
+
+    setStoryRole(sideFrame, 'center');
+    setStoryRole(centerFrame, sideRole);
+
+    setTimeout(() => {
+      sideFrame.style.zIndex = '';
+      centerFrame.style.zIndex = '';
+      delete sideFrame.dataset.swapping;
+      delete centerFrame.dataset.swapping;
+    }, 650);
+  }
+
+  document.querySelectorAll('.story-photos-wrapper').forEach(wrapper => {
+    wrapper.addEventListener('click', (e) => {
+      const frame = e.target.closest('.story-photo-frame');
+      if (!frame || !wrapper.contains(frame)) return;
+      if (getStoryRole(frame) === 'center') return;
+      const centerFrame = wrapper.querySelector('.story-photo-frame--center');
+      if (!centerFrame) return;
+      swapStoryRoles(frame, centerFrame);
+    });
+  });
 </script>
+
 
 </body>
 </html>
