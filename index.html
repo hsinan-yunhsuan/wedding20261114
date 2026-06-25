@@ -649,11 +649,14 @@
   .story-photos-wrapper {
     position: relative;
     max-width: 620px;
-    margin: 0 auto;
+    margin: 1.5rem auto 2.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem 0 2.25rem;
+    /* Fixed proportional height so the stack never grows/shrinks the page
+       when a photo swap changes the children's widths — only the photos
+       move inside this box, the section below stays put. */
+    aspect-ratio: 1 / 0.82;
   }
   .story-photo-frame {
     position: relative;
@@ -675,22 +678,22 @@
 
   /* Three-photo overlap: left + right tuck behind the larger centre photo */
   .story-photo-frame--left {
-    width: 30%;
+    width: 33%;
     aspect-ratio: 3/4;
-    margin-right: -9%;
+    margin-right: -13%;
     transform: rotate(-9deg) translateY(10px);
     z-index: 1;
   }
   .story-photo-frame--center {
-    width: 42%;
+    width: 50%;
     aspect-ratio: 3/4;
     transform: rotate(0deg) translateY(-14px);
     z-index: 3;
   }
   .story-photo-frame--right {
-    width: 30%;
+    width: 33%;
     aspect-ratio: 3/4;
-    margin-left: -9%;
+    margin-left: -13%;
     transform: rotate(9deg) translateY(10px);
     z-index: 2;
   }
@@ -749,20 +752,20 @@
   @media (max-width: 640px) {
     .story-photos-wrapper {
       max-width: 300px;
-      padding: 1.25rem 0 2rem;
+      margin: 1.25rem auto 2rem;
     }
     .story-photo-frame--left {
-      width: 26%;
-      margin-right: -12%;
+      width: 29%;
+      margin-right: -16%;
       transform: rotate(-11deg) translateY(14px);
     }
     .story-photo-frame--center {
-      width: 48%;
+      width: 56%;
       transform: rotate(0deg) translateY(-16px);
     }
     .story-photo-frame--right {
-      width: 26%;
-      margin-left: -12%;
+      width: 29%;
+      margin-left: -16%;
       transform: rotate(11deg) translateY(14px);
     }
     .story-photo-frame--left.photo-visible  { transform: rotate(-11deg) translateY(14px) !important; }
@@ -938,7 +941,7 @@
     <!-- 照片組：三張重疊堆放，中間為主照 -->
     <div class="story-photos-wrapper">
       <div class="story-photo-frame story-photo-frame--left story-photo-enter story-photo-enter--left">
-        <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0147.jpg" alt="信安 & 韻玄">
+        <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0058.jpg" alt="信安 & 韻玄">
         <span class="story-photo-tag">信安 &amp; 韻玄</span>
       </div>
 
