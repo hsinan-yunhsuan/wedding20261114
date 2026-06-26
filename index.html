@@ -353,20 +353,24 @@
     margin-right: auto;
   }
 
+  /* Story photos entrance — soft blur-in with a gentle rise/rotate settle */
   .story-photo-enter {
     opacity: 0;
-    transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .story-photo-enter--left {
-    transform: translateX(-40px) scale(0.96);
+  .story-photo-frame--left.story-photo-enter {
+    opacity: 0;
+    filter: blur(7px);
+    transform: translateX(-55px) translateY(26px) rotate(-22deg) scale(0.82);
   }
-  .story-photo-enter--right {
-    transform: translateX(40px) scale(0.96);
-    transition-delay: 0.2s;
+  .story-photo-frame--center.story-photo-enter {
+    opacity: 0;
+    filter: blur(7px);
+    transform: translateY(34px) scale(0.8);
   }
-  .story-photo-enter.photo-visible {
-    opacity: 1;
-    transform: translateX(0) scale(1);
+  .story-photo-frame--right.story-photo-enter {
+    opacity: 0;
+    filter: blur(7px);
+    transform: translateX(55px) translateY(26px) rotate(22deg) scale(0.82);
   }
 
   /* Mobile: stack vertically */
@@ -665,7 +669,7 @@
     box-shadow: 0 16px 48px rgba(120,90,60,0.18), 0 4px 12px rgba(120,90,60,0.1);
     border: 1px solid rgba(255,255,255,0.9);
     background: var(--warm-white);
-    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.6s, width 0.6s cubic-bezier(0.22,1,0.36,1), margin-left 0.6s cubic-bezier(0.22,1,0.36,1), margin-right 0.6s cubic-bezier(0.22,1,0.36,1);
+    transition: opacity 0.9s ease, filter 0.9s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease, width 0.6s cubic-bezier(0.22,1,0.36,1), margin-left 0.6s cubic-bezier(0.22,1,0.36,1), margin-right 0.6s cubic-bezier(0.22,1,0.36,1);
     cursor: pointer;
   }
   .story-photo-frame img {
@@ -689,6 +693,7 @@
     aspect-ratio: 3/4;
     transform: rotate(0deg) translateY(-14px);
     z-index: 3;
+    transition-delay: 0.12s;
   }
   .story-photo-frame--right {
     width: 33%;
@@ -696,6 +701,7 @@
     margin-left: -13%;
     transform: rotate(9deg) translateY(10px);
     z-index: 2;
+    transition-delay: 0.24s;
   }
   .story-photo-frame--left:hover {
     transform: rotate(-6deg) translateY(4px);
@@ -733,7 +739,7 @@
   }
 
   /* Photo entrance animations */
-  .story-photo-frame.photo-visible { opacity: 1 !important; }
+  .story-photo-frame.photo-visible { opacity: 1 !important; filter: blur(0) !important; }
   .story-photo-frame--left.photo-visible    { transform: rotate(-9deg) translateY(10px) !important; }
   .story-photo-frame--center.photo-visible  { transform: rotate(0deg) translateY(-14px) !important; }
   .story-photo-frame--right.photo-visible   { transform: rotate(9deg) translateY(10px) !important; }
@@ -790,7 +796,7 @@
   <div class="nav-logo"><strong>安心相守，玄定是你</strong></div>
   <ul class="nav-links">
     <li><a href="#photos">About</a></li>
-    <li><a href="#details">Detail</a></li>
+    <li><a href="#details">Details</a></li>
     <li><a href="#rsvp">RSVP</a></li>
   </ul>
 </nav>
@@ -940,17 +946,18 @@
 
     <!-- 照片組：三張重疊堆放，中間為主照 -->
     <div class="story-photos-wrapper">
-      <div class="story-photo-frame story-photo-frame--left story-photo-enter story-photo-enter--left">
+      <div class="story-photo-frame story-photo-frame--left story-photo-enter">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0058.jpg" alt="信安 & 韻玄">
         <span class="story-photo-tag">信安 &amp; 韻玄</span>
       </div>
 
-      <div class="story-photo-frame story-photo-frame--center story-photo-enter" style="transition-delay:0.1s;">
+      <div class="story-photo-frame story-photo-frame--center story-photo-enter">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0147.jpg" alt="信安 & 韻玄">
         <span class="story-photo-tag">Welcome</span>
       </div>
 
-      <div class="story-photo-frame story-photo-frame--right story-photo-enter story-photo-enter--right">
+
+      <div class="story-photo-frame story-photo-frame--right story-photo-enter">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0209.jpg" alt="信安 & 韻玄">
         <span class="story-photo-tag">2026.11.14</span>
       </div>
@@ -1494,7 +1501,7 @@ function resetForm(){
       centerFrame.style.zIndex = '';
       delete sideFrame.dataset.swapping;
       delete centerFrame.dataset.swapping;
-    }, 650);
+    }, 1100);
   }
 
   document.querySelectorAll('.story-photos-wrapper').forEach(wrapper => {
