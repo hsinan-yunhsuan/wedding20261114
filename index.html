@@ -353,24 +353,15 @@
     margin-right: auto;
   }
 
-  /* Story photos entrance — soft blur-in with a gentle rise/rotate settle */
-  .story-photo-enter {
+  /* Story photos entrance — graceful blur-in fall with a soft spring settle.
+     Each photo's resting tilt/lift (--rest-rot/--rest-y) and its starting
+     offset (--enter-x/--enter-rot) are supplied as CSS variables by the
+     role classes (.story-photo-frame--left/center/right) below, so all
+     three share one elegant keyframe animation. */
+  .story-photo-frame.story-photo-enter {
     opacity: 0;
-  }
-  .story-photo-frame--left.story-photo-enter {
-    opacity: 0;
-    filter: blur(7px);
-    transform: translateX(-55px) translateY(26px) rotate(-22deg) scale(0.82);
-  }
-  .story-photo-frame--center.story-photo-enter {
-    opacity: 0;
-    filter: blur(7px);
-    transform: translateY(34px) scale(0.8);
-  }
-  .story-photo-frame--right.story-photo-enter {
-    opacity: 0;
-    filter: blur(7px);
-    transform: translateX(55px) translateY(26px) rotate(22deg) scale(0.82);
+    filter: blur(10px);
+    transform: translate(var(--enter-x), calc(var(--rest-y) + 56px)) rotate(var(--enter-rot)) scale(0.74);
   }
 
   /* Mobile: stack vertically */
@@ -687,6 +678,10 @@
     margin-right: -13%;
     transform: rotate(-9deg) translateY(10px);
     z-index: 1;
+    --rest-rot: -9deg;
+    --rest-y: 10px;
+    --enter-x: -72px;
+    --enter-rot: -30deg;
   }
   .story-photo-frame--center {
     width: 50%;
@@ -694,6 +689,10 @@
     transform: rotate(0deg) translateY(-14px);
     z-index: 3;
     transition-delay: 0.12s;
+    --rest-rot: 0deg;
+    --rest-y: -14px;
+    --enter-x: 0px;
+    --enter-rot: -4deg;
   }
   .story-photo-frame--right {
     width: 33%;
@@ -702,6 +701,10 @@
     transform: rotate(9deg) translateY(10px);
     z-index: 2;
     transition-delay: 0.24s;
+    --rest-rot: 9deg;
+    --rest-y: 10px;
+    --enter-x: 72px;
+    --enter-rot: 30deg;
   }
   .story-photo-frame--left:hover {
     transform: rotate(-6deg) translateY(4px);
@@ -738,19 +741,128 @@
     border: 1px solid rgba(255,255,255,0.9);
   }
 
-  /* Photo entrance animations */
-  .story-photo-frame.photo-visible { opacity: 1 !important; filter: blur(0) !important; }
-  .story-photo-frame--left.photo-visible    { transform: rotate(-9deg) translateY(10px) !important; }
-  .story-photo-frame--center.photo-visible  { transform: rotate(0deg) translateY(-14px) !important; }
-  .story-photo-frame--right.photo-visible   { transform: rotate(9deg) translateY(10px) !important; }
+  /* Photo entrance animations — a gentle falling-photograph settle:
+     fades and unblurs while drifting in, slightly overshoots past its
+     resting tilt, then eases back — like a polaroid landing softly. */
+  @keyframes storyPhotoSettle {
+    0% {
+      opacity: 0;
+      filter: blur(10px);
+      transform: translate(var(--enter-x), calc(var(--rest-y) + 56px)) rotate(var(--enter-rot)) scale(0.74);
+    }
+    42% {
+      opacity: 1;
+    }
+    66% {
+      filter: blur(0);
+      transform: translate(calc(var(--enter-x) * 0.04), calc(var(--rest-y) - 8px)) rotate(calc(var(--rest-rot) - 3deg)) scale(1.045);
+    }
+    100% {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate(0, var(--rest-y)) rotate(var(--rest-rot)) scale(1);
+    }
+  }
+  .story-photo-frame.photo-visible {
+    animation: storyPhotoSettle 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
 
   /* Tap / click swaps a side photo with the centre one — the frame's
-     role class changes, so width / margin / rotation all animate together */
+     role class changes, so width / margin / rotation all animate together.
+     The centre photo is the "main" one, so clicking it opens a full-size
+     lightbox instead of swapping. */
   .story-photo-frame--left,
   .story-photo-frame--right { cursor: pointer; }
-  .story-photo-frame--center { cursor: default; }
+  .story-photo-frame--center { cursor: zoom-in; }
   .story-photo-frame img {
     transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  /* Zoom affordance icon on the main (centre) photo */
+  .story-photo-zoom-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .story-photo-frame--center:hover .story-photo-zoom-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .story-photo-zoom-icon svg { width: 15px; height: 15px; stroke: var(--gold); }
+
+  /* ── Lightbox: full-size photo viewer ── */
+  .photo-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(30,24,18,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 4vw;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease;
+  }
+  .photo-lightbox.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .photo-lightbox-img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform: scale(0.92);
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    cursor: zoom-out;
+  }
+  .photo-lightbox.active .photo-lightbox-img {
+    transform: scale(1);
+  }
+  .photo-lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.75rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--warm-white);
+    font-size: 1.4rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .photo-lightbox-close:hover {
+    background: rgba(255,255,255,0.22);
+    transform: rotate(90deg);
+  }
+  @media (max-width: 640px) {
+    .photo-lightbox-close {
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+    }
   }
 
   /* Mobile: shrink the stack but increase the overlap so the centre photo
@@ -764,19 +876,24 @@
       width: 29%;
       margin-right: -16%;
       transform: rotate(-11deg) translateY(14px);
+      --rest-rot: -11deg;
+      --rest-y: 14px;
+      --enter-x: -46px;
     }
     .story-photo-frame--center {
       width: 56%;
       transform: rotate(0deg) translateY(-16px);
+      --rest-rot: 0deg;
+      --rest-y: -16px;
     }
     .story-photo-frame--right {
       width: 29%;
       margin-left: -16%;
       transform: rotate(11deg) translateY(14px);
+      --rest-rot: 11deg;
+      --rest-y: 14px;
+      --enter-x: 46px;
     }
-    .story-photo-frame--left.photo-visible  { transform: rotate(-11deg) translateY(14px) !important; }
-    .story-photo-frame--center.photo-visible{ transform: rotate(0deg) translateY(-16px) !important; }
-    .story-photo-frame--right.photo-visible { transform: rotate(11deg) translateY(14px) !important; }
     .story-photo-tag {
       font-size: 0.5rem;
       padding: 0.15rem 0.55rem;
@@ -946,27 +1063,33 @@
 
     <!-- 照片組：三張重疊堆放，中間為主照 -->
     <div class="story-photos-wrapper">
-      <div class="story-photo-frame story-photo-frame--left story-photo-enter">
+      <div class="story-photo-frame story-photo-frame--left story-photo-enter" style="animation-delay:0s;">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0058.jpg" alt="信安 & 韻玄">
         <span class="story-photo-tag">信安 &amp; 韻玄</span>
       </div>
 
-      <div class="story-photo-frame story-photo-frame--center story-photo-enter">
+      <div class="story-photo-frame story-photo-frame--center story-photo-enter" style="animation-delay:0.18s;">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0147.jpg" alt="信安 & 韻玄">
+        <span class="story-photo-zoom-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+        </span>
         <span class="story-photo-tag">Welcome</span>
       </div>
 
 
-      <div class="story-photo-frame story-photo-frame--right story-photo-enter">
+      <div class="story-photo-frame story-photo-frame--right story-photo-enter" style="animation-delay:0.36s;">
         <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0209.jpg" alt="信安 & 韻玄">
         <span class="story-photo-tag">2026.11.14</span>
       </div>
     </div>
+
+    <!-- 全螢幕放大檢視器 -->
+    <div class="photo-lightbox" id="photo-lightbox">
+      <div class="photo-lightbox-close" id="photo-lightbox-close" aria-label="關閉">&times;</div>
+      <img class="photo-lightbox-img" id="photo-lightbox-img" src="" alt="放大照片">
+    </div>
   </div>
 </section>
-
-
-<!-- DETAILS + TIMELINE -->
 <section id="details">
   <div class="section-inner">
     <p class="section-label reveal-on-scroll" data-delay="1">Wedding Details</p>
@@ -1027,7 +1150,7 @@
           </div>
           <div>
             <span class="v-card-row-label">停車 Parking</span>
-            <span style="font-size:0.84rem;color:var(--text-mid);display:block;margin-top:0.1rem;">附第一、第二平面停車場</span>
+            <span style="font-size:0.84rem;color:var(--text-mid);display:block;margin-top:0.1rem;">備有第一、第二平面停車場</span>
           </div>
         </div>
 
@@ -1062,10 +1185,10 @@
                   <div>
                     <div style="margin-bottom:0.4rem;">公車 300 → 358 轉乘，30分鐘一班。</div>
                     <span>公車300 至<span class="nowrap">「秋紅谷」</span>下車
-                    <span class="t-arrow">→</span>轉搭358 至<span class="nowrap">「公益永春東七路口」</span>下車
-                    <span class="t-arrow">→</span>沿<span class="nowrap">公益路二段</span>往<span class="nowrap">環中路</span>步行
-                    <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>左轉
-                    <span class="t-arrow">→</span><span class="t-dest">与玥樓（步行約10分鐘）</span></span>
+                    <span class="t-arrow">→</span>轉搭公車358 至<span class="nowrap">「文心南五大墩十二街口」</span>下車
+                    <span class="t-arrow">→</span>沿<span class="nowrap">文心南五路三段</span>步行
+                    <span class="t-arrow">→</span><span class="nowrap">公益路二段</span>左轉
+                    <span class="t-arrow">→</span><span class="t-dest">与玥樓（步行約4分鐘）</span></span>
                   </div>
                 </div>
                 <div class="transport-row">
@@ -1508,11 +1631,48 @@ function resetForm(){
     wrapper.addEventListener('click', (e) => {
       const frame = e.target.closest('.story-photo-frame');
       if (!frame || !wrapper.contains(frame)) return;
-      if (getStoryRole(frame) === 'center') return;
+
+      // Clicking the centre (main) photo opens it full-size instead of swapping
+      if (getStoryRole(frame) === 'center') {
+        const img = frame.querySelector('img');
+        if (img) openPhotoLightbox(img.src, img.alt);
+        return;
+      }
+
       const centerFrame = wrapper.querySelector('.story-photo-frame--center');
       if (!centerFrame) return;
       swapStoryRoles(frame, centerFrame);
     });
+  });
+
+  // ── Lightbox: open / close full-size photo viewer ──
+  const lightboxEl = document.getElementById('photo-lightbox');
+  const lightboxImgEl = document.getElementById('photo-lightbox-img');
+  const lightboxCloseEl = document.getElementById('photo-lightbox-close');
+
+  function openPhotoLightbox(src, alt) {
+    if (!lightboxEl || !lightboxImgEl) return;
+    lightboxImgEl.src = src;
+    lightboxImgEl.alt = alt || '放大照片';
+    lightboxEl.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePhotoLightbox() {
+    if (!lightboxEl) return;
+    lightboxEl.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  if (lightboxEl) {
+    lightboxEl.addEventListener('click', (e) => {
+      // Close when clicking the dark backdrop or the photo itself
+      if (e.target === lightboxEl || e.target === lightboxImgEl) closePhotoLightbox();
+    });
+  }
+  if (lightboxCloseEl) {
+    lightboxCloseEl.addEventListener('click', closePhotoLightbox);
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePhotoLightbox();
   });
 </script>
 
