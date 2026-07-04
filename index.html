@@ -40,6 +40,9 @@
   .nav-links { display: flex; gap: 0.25rem; list-style: none; }
   .nav-links a { font-family: 'Noto Sans TC', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; color: var(--text-mid); text-decoration: none; padding: 0.45rem 0.8rem; border-radius: 30px; transition: all 0.3s; white-space: nowrap; }
   .nav-links a:hover { background: rgba(212,163,115,0.15); color: var(--gold); }
+  .nav-lang-toggle { display: flex; align-items: center; gap: 0; border: 1px solid var(--border-subtle); border-radius: 30px; padding: 3px; margin-left: 0.75rem; background: rgba(255,255,255,0.6); flex-shrink: 0; }
+  .global-lang-btn { padding: 0.3rem 0.75rem; border-radius: 30px; border: none; background: transparent; color: var(--text-light); font-family: 'Montserrat', sans-serif; font-size: 0.66rem; letter-spacing: 0.12em; cursor: pointer; transition: all 0.3s cubic-bezier(0.22,1,0.36,1); white-space: nowrap; }
+  .global-lang-btn.active { background: var(--gold); color: white; box-shadow: 0 2px 8px rgba(212,163,115,0.4); }
 
   /* HERO */
   .hero {
@@ -907,15 +910,22 @@
 </style>
 </head>
 <body>
+<script>var currentLang = 'zh';</script>
 
 <!-- NAV -->
 <nav>
   <div class="nav-logo"><strong>安心相守，玄定是你</strong></div>
-  <ul class="nav-links">
-    <li><a href="#photos">About</a></li>
-    <li><a href="#details">Details</a></li>
-    <li><a href="#rsvp">RSVP</a></li>
-  </ul>
+  <div style="display:flex;align-items:center;">
+    <ul class="nav-links">
+      <li><a href="#photos">About</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#rsvp">RSVP</a></li>
+    </ul>
+    <div class="nav-lang-toggle">
+      <button id="global-btn-zh" class="global-lang-btn active" data-lang="zh" onclick="applyLang('zh')">中文</button>
+      <button id="global-btn-en" class="global-lang-btn" data-lang="en" onclick="applyLang('en')">EN</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -931,9 +941,9 @@
       <div class="hero-divider-ornament">✦</div>
       <div class="hero-divider-line right"></div>
     </div>
-    <p class="hero-date">2026 年 11 月 14 日 (六) 午宴</p>
-    <p class="hero-location">台中 · 与玥樓 2F</p>
-    <a href="#rsvp" class="hero-cta-btn">出席回覆　RSVP</a>
+    <p class="hero-date" data-en="Nov 14, 2026 (Sat) · Luncheon">2026 年 11 月 14 日 (六) 午宴</p>
+    <p class="hero-location" data-en="Taichung · Yu Yue Lou, 2F">台中 · 与玥樓 2F</p>
+    <a href="#rsvp" class="hero-cta-btn" data-en="出席回覆 RSVP">出席回覆　RSVP</a>
   </div>
   <div class="scroll-hint"><span>SCROLL</span><div class="scroll-arrow"></div></div>
 </section>
@@ -942,8 +952,8 @@
 <section id="countdown-section">
   <div class="section-inner">
     <p class="section-label">Time Remaining</p>
-    <h2 class="section-title">距離婚禮</h2>
-    <p class="section-subtitle">每一天都是我們相聚的倒數</p>
+    <h2 class="section-title" data-en="Countdown">距離婚禮</h2>
+    <p class="section-subtitle" data-en="Every day brings us closer together">每一天都是我們相聚的倒數</p>
     <div class="countdown-wrapper">
       <div class="countdown-unit">
         <div class="countdown-card">
@@ -990,17 +1000,11 @@
 <section id="photos">
   <div class="section-inner">
     <p class="section-label reveal-on-scroll" data-delay="1">Our Story</p>
-    <h2 class="section-title reveal-on-scroll" data-delay="2">我們的故事</h2>
+    <h2 class="section-title reveal-on-scroll" data-delay="2" data-en="About US">我們的故事</h2>
     <div class="ornamental-divider reveal-on-scroll" data-delay="3">
       <div class="ornamental-divider-line"></div>
       <span>✦</span>
       <div class="ornamental-divider-line right"></div>
-    </div>
-
-    <!-- 語言切換 -->
-    <div class="lang-toggle reveal-on-scroll" data-delay="4">
-      <button id="btn-zh" class="lang-btn active" onclick="switchLang('zh')">中文</button>
-      <button id="btn-en" class="lang-btn" onclick="switchLang('en')">English</button>
     </div>
 
     <!-- 文字故事區 -->
@@ -1064,12 +1068,12 @@
     <!-- 照片組：三張重疊堆放，中間為主照 -->
     <div class="story-photos-wrapper">
       <div class="story-photo-frame story-photo-frame--left story-photo-enter" style="animation-delay:0s;">
-        <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0058.jpg" alt="信安 & 韻玄">
+        <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0051.jpg" alt="信安 & 韻玄">
         <span class="story-photo-tag">信安 &amp; 韻玄</span>
       </div>
 
       <div class="story-photo-frame story-photo-frame--center story-photo-enter" style="animation-delay:0.18s;">
-        <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0147.jpg" alt="信安 & 韻玄">
+        <img src="https://raw.githubusercontent.com/hsinan-yunhsuan/wedding20261114/main/0102.jpg" alt="信安 & 韻玄">
         <span class="story-photo-zoom-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
         </span>
@@ -1093,30 +1097,30 @@
 <section id="details">
   <div class="section-inner">
     <p class="section-label reveal-on-scroll" data-delay="1">Wedding Details</p>
-    <h2 class="section-title reveal-on-scroll" data-delay="2">婚禮詳情</h2>
+    <h2 class="section-title reveal-on-scroll" data-delay="2" data-en="Wedding Schedule">婚禮詳情</h2>
     <div class="ornamental-divider reveal-on-scroll" data-delay="3">
       <div class="ornamental-divider-line"></div>
       <span>✦</span>
       <div class="ornamental-divider-line right"></div>
     </div>
-    <p class="reveal-on-scroll" data-delay="4" style="text-align:center;font-family:'Noto Serif TC',serif;font-size:0.82rem;color:var(--text-light);letter-spacing:0.15em;margin-bottom:2.75rem;">2026 年 11 月 14 日 (六) · 流程</p>
+    <p class="reveal-on-scroll" data-delay="4" data-en="Nov 14, 2026 (Sat)" style="text-align:center;font-family:'Noto Serif TC',serif;font-size:0.82rem;color:var(--text-light);letter-spacing:0.15em;margin-bottom:2.75rem;">2026 年 11 月 14 日 (六) · 流程</p>
 
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-dot">🌿</div>
-        <div class="timeline-text"><span class="timeline-time">10:40 AM — 證婚入場</span></div>
+        <div class="timeline-text"><span class="timeline-time" data-en="10:40 AM — Ceremony Entrance">10:40 AM — 證婚入場</span></div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">💍</div>
-        <div class="timeline-text"><span class="timeline-time">11:00 AM — 證婚儀式</span></div>
+        <div class="timeline-text"><span class="timeline-time" data-en="11:00 AM — Wedding Ceremony">11:00 AM — 證婚儀式</span></div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">🥂</div>
-        <div class="timeline-text"><span class="timeline-time">12:00 PM — 午宴入席</span></div>
+        <div class="timeline-text"><span class="timeline-time" data-en="12:00 PM — Luncheon Seating">12:00 PM — 午宴入席</span></div>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot">🍽️</div>
-        <div class="timeline-text"><span class="timeline-time">12:30 PM — 午宴開席</span></div>
+        <div class="timeline-text"><span class="timeline-time" data-en="12:30 PM — Luncheon Begins">12:30 PM — 午宴開席</span></div>
       </div>
     </div>
 
@@ -1142,28 +1146,28 @@
         <div style="display:flex;flex-direction:column;gap:0.85rem;margin-bottom:1.25rem;">
           <div>
             <span class="v-card-row-label">場地 Venue</span>
-            <span style="font-size:0.9rem;color:var(--text-dark);font-weight:500;display:block;margin-top:0.1rem;">与玥樓 2F</span>
+            <span data-en="Yu Yue Lou (与玥樓), 2F" style="font-size:0.9rem;color:var(--text-dark);font-weight:500;display:block;margin-top:0.1rem;">与玥樓 2F</span>
           </div>
           <div>
             <span class="v-card-row-label">地址 Address</span>
-            <span style="font-size:0.84rem;color:var(--text-mid);display:block;margin-top:0.1rem;">台中市南屯區公益路二段783號</span>
+            <span data-en="No. 783, Sec. 2, Gongyi Rd., Nantun Dist., Taichung City" style="font-size:0.84rem;color:var(--text-mid);display:block;margin-top:0.1rem;">台中市南屯區公益路二段783號</span>
           </div>
           <div>
             <span class="v-card-row-label">停車 Parking</span>
-            <span style="font-size:0.84rem;color:var(--text-mid);display:block;margin-top:0.1rem;">備有第一、第二平面停車場</span>
+            <span data-en="On-site Parking Lots 1 & 2 available" style="font-size:0.84rem;color:var(--text-mid);display:block;margin-top:0.1rem;">附第一、第二平面停車場</span>
           </div>
         </div>
 
         <a href="https://maps.google.com/?q=台中市南屯區公益路二段783號与玥樓" target="_blank" rel="noopener" class="maps-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          開啟 Google Maps 導航
+          <span data-en="Open in Google Maps">開啟 Google Maps 導航</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         </a>
 
         <div class="accordion">
           <div class="accordion-item">
             <button class="accordion-trigger" onclick="toggleAccordion(this)">
-              <span class="accordion-trigger-left"><span class="accordion-icon-dot accordion-icon-dot--sage"></span>🚌 大眾運輸</span>
+              <span class="accordion-trigger-left"><span class="accordion-icon-dot accordion-icon-dot--sage"></span><span data-en="🚌 Public Transit">🚌 大眾運輸</span></span>
               <span class="accordion-chevron"></span>
             </button>
             <div class="accordion-body">
@@ -1185,10 +1189,10 @@
                   <div>
                     <div style="margin-bottom:0.4rem;">公車 300 → 358 轉乘，30分鐘一班。</div>
                     <span>公車300 至<span class="nowrap">「秋紅谷」</span>下車
-                    <span class="t-arrow">→</span>轉搭公車358 至<span class="nowrap">「文心南五大墩十二街口」</span>下車
-                    <span class="t-arrow">→</span>沿<span class="nowrap">文心南五路三段</span>步行
-                    <span class="t-arrow">→</span><span class="nowrap">公益路二段</span>左轉
-                    <span class="t-arrow">→</span><span class="t-dest">与玥樓（步行約4分鐘）</span></span>
+                    <span class="t-arrow">→</span>轉搭358 至<span class="nowrap">「公益永春東七路口」</span>下車
+                    <span class="t-arrow">→</span>沿<span class="nowrap">公益路二段</span>往<span class="nowrap">環中路</span>步行
+                    <span class="t-arrow">→</span><span class="nowrap">益豐路四段</span>左轉
+                    <span class="t-arrow">→</span><span class="t-dest">与玥樓（步行約10分鐘）</span></span>
                   </div>
                 </div>
                 <div class="transport-row">
@@ -1200,7 +1204,7 @@
           </div>
           <div class="accordion-item">
             <button class="accordion-trigger" onclick="toggleAccordion(this)">
-              <span class="accordion-trigger-left"><span class="accordion-icon-dot accordion-icon-dot--warm"></span>🚕 自行開車</span>
+              <span class="accordion-trigger-left"><span class="accordion-icon-dot accordion-icon-dot--warm"></span><span data-en="🚕 Driving">🚕 自行開車</span></span>
               <span class="accordion-chevron"></span>
             </button>
             <div class="accordion-body">
@@ -1239,8 +1243,8 @@
 <!-- RSVP -->
 <section id="rsvp">
   <div class="section-inner">
-    <p class="section-label reveal-on-scroll" data-delay="1">RSVP</p>
-    <h2 class="section-title reveal-on-scroll" data-delay="2">出席回覆</h2>
+    <p class="section-label reveal-on-scroll" data-delay="1">Welcome</p>
+    <h2 class="section-title reveal-on-scroll" data-delay="2" data-en="RSVP">出席回覆</h2>
     <div class="rsvp-card">
 
       <div id="form-area">
@@ -1248,7 +1252,7 @@
 
           <div class="form-group">
             <label class="form-label" for="f-name">姓名 <span class="label-en">NAME</span></label>
-            <input class="form-input" type="text" id="f-name" placeholder="您的姓名" required autocomplete="off">
+            <input class="form-input" type="text" id="f-name" placeholder="您的姓名" data-en-placeholder="Your Name" required autocomplete="off">
           </div>
 
           <div class="form-row">
@@ -1256,11 +1260,11 @@
               <label class="form-label" for="f-side">與新人關係 <span class="label-en">GUEST OF</span></label>
               <div class="form-select-wrap">
                 <select class="form-select" id="f-side" required>
-                  <option value="">請選擇</option>
-                  <option value="新郎親屬">新郎親戚</option>
-                  <option value="新郎朋友">新郎朋友</option>
-                  <option value="新娘親屬">新娘親戚</option>
-                  <option value="新娘朋友">新娘朋友</option>
+                  <option value="" data-en="Please select">請選擇</option>
+                  <option value="新郎親屬" data-en="Groom's Family">新郎親戚</option>
+                  <option value="新郎朋友" data-en="Groom's Friend">新郎朋友</option>
+                  <option value="新娘親屬" data-en="Bride's Family">新娘親戚</option>
+                  <option value="新娘朋友" data-en="Bride's Friend">新娘朋友</option>
                 </select>
               </div>
             </div>
@@ -1268,10 +1272,10 @@
               <label class="form-label" for="f-attendance">出席範圍 <span class="label-en">ATTENDANCE</span></label>
               <div class="form-select-wrap">
                 <select class="form-select" id="f-attendance" required onchange="handleAttendance(this.value)">
-                  <option value="">請選擇</option>
-                  <option value="證婚 + 喜宴">見證幸福的每一刻（證婚 + 喜宴）</option>
-                  <option value="喜宴">參與幸福饗宴（喜宴）</option>
-                  <option value="無法出席">無法親臨現場，但祝福與你們同在</option>
+                  <option value="" data-en="Please select">請選擇</option>
+                  <option value="證婚 + 喜宴" data-en="Join us for the Ceremony &amp; Luncheon">見證幸福的每一刻（證婚 + 喜宴）</option>
+                  <option value="喜宴" data-en="Join us for the Luncheon only">參與幸福饗宴（喜宴）</option>
+                  <option value="無法出席" data-en="Unable to attend, but sending our blessings">無法親臨現場，但祝福與你們同在</option>
                 </select>
               </div>
             </div>
@@ -1288,11 +1292,11 @@
                 <label class="form-label" for="f-diet">飲食需求 <span class="label-en">DIETARY</span></label>
                 <div class="form-select-wrap">
                   <select class="form-select" id="f-diet">
-                    <option value="">請選擇</option>
-                    <option value="葷食">葷食</option>
-                    <option value="素食">素食</option>
-                    <option value="素食菇類過敏">素食，但菇類過敏</option>
-                    <option value="其他（請備註）">其他（請備註）</option>
+                    <option value="" data-en="Please select">請選擇</option>
+                    <option value="葷食" data-en="Regular (Non-Vegetarian)">葷食</option>
+                    <option value="素食" data-en="Vegetarian">素食</option>
+                    <option value="素食菇類過敏" data-en="Vegetarian, allergic to mushrooms">素食，但菇類過敏</option>
+                    <option value="其他（請備註）" data-en="Other (please specify below)">其他（請備註）</option>
                   </select>
                 </div>
               </div>
@@ -1300,11 +1304,11 @@
                 <label class="form-label" for="f-highchair">兒童椅需求 <span class="label-en">HIGH CHAIR</span></label>
                 <div class="form-select-wrap">
                   <select class="form-select" id="f-highchair">
-                    <option value="">請選擇</option>
-                    <option value="不需要">不需要</option>
-                    <option value="需要 1 張">需要 1 張</option>
-                    <option value="需要 2 張">需要 2 張</option>
-                    <option value="需要 3 張以上">需要 3 張以上</option>
+                    <option value="" data-en="Please select">請選擇</option>
+                    <option value="不需要" data-en="Not needed">不需要</option>
+                    <option value="需要 1 張" data-en="Need 1">需要 1 張</option>
+                    <option value="需要 2 張" data-en="Need 2">需要 2 張</option>
+                    <option value="需要 3 張以上" data-en="Need 3+">需要 3 張以上</option>
                   </select>
                 </div>
               </div>
@@ -1313,17 +1317,17 @@
 
           <div class="form-group" id="message-field" style="display:none;">
             <label class="form-label" for="f-message">祝福留言 <span class="label-en">MESSAGE</span></label>
-            <textarea class="form-textarea" id="f-message" placeholder="留下您對我們的祝福與話語…"></textarea>
+            <textarea class="form-textarea" id="f-message" placeholder="留下您對我們的祝福與話語…" data-en-placeholder="Leave your blessings and wishes for us…"></textarea>
           </div>
 
-          <button type="submit" class="form-submit">送出回覆　SUBMIT RSVP</button>
+          <button type="submit" class="form-submit" data-en="SUBMIT RSVP">送出回覆　SUBMIT RSVP</button>
 
         </form>
       </div>
 
       <div class="success-message" id="success-msg">
         <div class="success-icon">💌</div>
-        <p class="success-title">感謝您的回覆！</p>
+        <p class="success-title" data-en="Thank You for Your Response!">感謝您的回覆！</p>
         <p class="success-text">
           Thank you for responding.<br>We look forward to celebrating with you.<br><br>
         </p>
@@ -1331,11 +1335,11 @@
 
       <div class="success-message" id="error-msg" style="display:none;">
         <div class="success-icon">⚠️</div>
-        <p class="success-title error-title">送出失敗</p>
-        <p class="success-text error-text">
+        <p class="success-title error-title" data-en="Submission Failed">送出失敗</p>
+        <p class="success-text error-text" data-en="Network or system error.<br>Please contact us directly!<br><br>">
           網路連線異常 或 系統問題<br>請聯絡我們！<br><br>
         </p>
-        <button onclick="resetForm()" class="ghost-btn">
+        <button onclick="resetForm()" class="ghost-btn" data-en="← Back to Edit">
           ← 返回重新填寫
         </button>
       </div>
@@ -1387,7 +1391,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby4udDKXCon6Es7Mb8c4
     const diff = target - new Date();
     if(diff <= 0){
       Object.values(cdEls).forEach(el => { if(el && el !== cdEls.msg) el.textContent = '00'; });
-      if(cdEls.msg) cdEls.msg.textContent = '今天是我們的大日子！🎉';
+      if(cdEls.msg) cdEls.msg.textContent = (currentLang === 'en') ? "Today is our big day! 🎉" : '今天是我們的大日子！🎉';
       clearInterval(intervalId);
       return;
     }
@@ -1405,20 +1409,44 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby4udDKXCon6Es7Mb8c4
 })();
 
 
-// ── Language toggle ──
-function switchLang(lang) {
-  const zh    = document.getElementById('story-zh');
-  const en    = document.getElementById('story-en');
-  const btnZh = document.getElementById('btn-zh');
-  const btnEn = document.getElementById('btn-en');
-  if (lang === 'zh') {
-    zh.style.display = 'block'; en.style.display = 'none';
-    btnZh.classList.add('active');   btnEn.classList.remove('active');
-  } else {
-    zh.style.display = 'none';  en.style.display = 'block';
-    btnEn.classList.add('active');   btnZh.classList.remove('active');
+// ── Global language toggle (whole site, excluding transport-step details) ──
+// currentLang is declared early (right after <body>) so the countdown script can safely read it.
+
+function captureOriginalText() {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    if (el.dataset.zh === undefined) el.dataset.zh = el.innerHTML;
+  });
+  document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+    if (el.dataset.zhPlaceholder === undefined) el.dataset.zhPlaceholder = el.placeholder;
+  });
+}
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = (lang === 'en') ? 'en' : 'zh-TW';
+
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.innerHTML = (lang === 'en') ? el.dataset.en : el.dataset.zh;
+  });
+  document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+    el.placeholder = (lang === 'en') ? el.dataset.enPlaceholder : el.dataset.zhPlaceholder;
+  });
+
+  document.querySelectorAll('.global-lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+
+  // "Our Story" text block: keep swapping between the two dedicated blocks
+  const storyZh = document.getElementById('story-zh');
+  const storyEn = document.getElementById('story-en');
+  if (storyZh && storyEn) {
+    storyZh.style.display = (lang === 'zh') ? 'block' : 'none';
+    storyEn.style.display = (lang === 'en') ? 'block' : 'none';
   }
 }
+
+captureOriginalText();
+applyLang('zh');
 
 // ── Accordion ──
 function toggleAccordion(btn){
@@ -1466,7 +1494,7 @@ function submitForm(e){
 
   const btn = document.querySelector('.form-submit');
   btn.disabled = true;
-  btn.textContent = '送出中…';
+  btn.textContent = (currentLang === 'en') ? 'Sending…' : '送出中…';
 
   const body = {
     name:       document.getElementById('f-name').value.trim(),
@@ -1486,7 +1514,7 @@ function submitForm(e){
     if (document.body.contains(script)) document.body.removeChild(script);
     delete window[callbackName];
     btn.disabled = false;
-    btn.textContent = '送出回覆　SUBMIT RSVP';
+    btn.innerHTML = (currentLang === 'en') ? btn.dataset.en : btn.dataset.zh;
   };
 
   // 10 秒 timeout 保護
